@@ -1,0 +1,26 @@
+.navbar_div {
+  background-color: #f1f1f1;
+}
+.ul {
+  font-weight: 700;
+}
+.buttons {
+  background-color: #fff;
+  /* background-color: #039be5; */
+  color: black !important;
+  border: 3px dashed black;
+  border-radius: 15px;
+  font-size: 0.7rem !important;
+}
+.buttons:focus {
+  background-color: #039be5 !important;
+  transition: background-color 0.5s;
+  color: white !important;
+  border: 3px solid black;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.buttons:hover {
+  border: 3px dashed #039be5;
+  /* border: 4px dashed #28a745; */
+}

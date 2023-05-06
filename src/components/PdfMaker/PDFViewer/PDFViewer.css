@@ -1,0 +1,12 @@
+.pg {
+  max-height: 1462px;
+}
+/* .sections h4 {
+  font-size: clamp(10px, 2vw, 1000px);
+} */
+.whereisthis canvas {
+  color: red;
+  /* margin-right: auto;
+  margin-left: auto; */
+  margin-top: 2vh;
+}

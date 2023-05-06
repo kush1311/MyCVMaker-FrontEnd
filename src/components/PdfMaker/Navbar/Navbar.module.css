@@ -1,0 +1,47 @@
+.nav {
+  /* background-color: indianred; */
+  margin: 0 !important;
+  /* color: white; */
+  margin-bottom: 5px !important;
+  font-weight: 700;
+}
+.ul {
+  margin: 0 !important;
+  display: flex;
+  list-style-type: none;
+  margin-bottom: 0.5rem;
+  padding-left: 50px !important;
+  padding-right: 0px !important;
+  width: 100%;
+  color: inherit;
+  font-weight: inherit;
+  font-size: 20px;
+}
+/* * */
+/* * */
+/* * */
+.buttons {
+  text-decoration: solid;
+  line-height: 1rem !important;
+  /* width: 5rem; */
+  /* background-color: inherit; */
+  border: none;
+  margin-right: 3rem !important;
+  /* color: white; */
+  /* font-size: 0.7rem; */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+.ul .signoutbutton {
+  margin-left: auto;
+  /* color: white; */
+  /* background-color: indianred; */
+  padding: 10px;
+  width: 5rem;
+  font-size: inherit;
+  font-weight: inherit;
+  margin-right: 5px !important;
+}

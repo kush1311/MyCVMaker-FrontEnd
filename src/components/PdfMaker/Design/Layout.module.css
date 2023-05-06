@@ -1,0 +1,31 @@
+.maindiv {
+  background-color: lightblue;
+  transition: background-color 0.7s ease-out;
+}
+.highlightRow {
+  width: 20px;
+  background-color: inherit;
+  outline: 2px dashed limegreen;
+  background-color: white;
+
+  border-radius: 10px;
+}
+.highlightRow:hover {
+  width: 100px;
+  transition: width 0.5s ease-out;
+  background-color: white;
+}
+.highlightColumn {
+  height: 20px;
+  width: 100px;
+  border-radius: 10px;
+  background-color: inherit;
+  outline: 2px dashed limegreen;
+  background-color: white;
+}
+.highlightColumn:hover {
+  height: 40px;
+  transition: height 0.3s ease-out;
+  background-color: white;
+}
+/* Do think replacing for mobile users, They dont have hover effect */
