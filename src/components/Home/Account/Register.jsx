@@ -27,13 +27,16 @@ const Register = () => {
     }
     try {
       console.log('Inside try');
-      const res = await registerApiCall();
+      const res = await registerApiCall({
+        email, password, firstName, lastName
+      });
       setLoading(false);
       if (res && res.status === 201) {
         history.replace("/login");
       }
     } catch (err) {
       setLoading(false);
+      console.log(err.message);
       if (
         err &&
         err.response &&
