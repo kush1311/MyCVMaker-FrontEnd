@@ -8,7 +8,7 @@ import r from "./Register.module.css";
 import { getResumeData } from "../../../utils/apiCalls";
 import { Loader } from "../../../constants/Loader";
 import { Helmet } from "react-helmet";
-
+import { loginApiCall } from "../../../utils/apiCalls"
 // axios.defaults.withCredentials = true;
 const Login = () => {
   const history = useHistory();
@@ -22,49 +22,35 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const loginApiCall = async () => {
+  const loginButtonClickHandler = async () => {
     setLoading(true);
-    await axios
-      .post(`${process.env.REACT_APP_URL}/login`, {
-        email,
-        password,
-      })
-      .then(async (res) => {
-        //console.log(res);
-        if (res && res.status === 200) {
-          // authApi.authenticated(true);
-          localStorage.setItem("%su!I#d", res.data.userId);
-          localStorage.setItem("%ru!I#d", res.data.resumeId);
-          if (localStorage.getItem("store")) {
-            localStorage.removeItem("store");
-          }
-          // api.setUserId(res.data.userId);
-          // api.setResumeIdArray(res.data.resumeIdArray);
-          let data = await getResumeData();
-          api.updateCV(data);
-          setLoading(false);
-          setTimeout(() => {
-            history.push("/resume-builder/");
-          }, 200);
+    try {
+      const res = await loginApiCall({email, password});
+      if (res && res.status === 200) {
+        localStorage.setItem("%su!I#d", res.data.userId);
+        localStorage.setItem("%ru!I#d", res.data.resumeId);
+        if (localStorage.getItem("store")) {
+          localStorage.removeItem("store");
         }
+        let data = await getResumeData();
+        api.updateCV(data);
         setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-
-        //console.log(err);
-        if (
-          err &&
-          err.response &&
-          err.response.status &&
-          err.response.status === 401 &&
-          err.response.data &&
-          err.response.data.message
-        ) {
-          alert(err.response.data.message);
-        }
-        // authApi.authenticated(false);
-      });
+        setTimeout(() => {
+          history.push("/resume-builder/");
+        }, 200);
+      };
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      if (
+        err &&
+        err.response &&
+        err.response.data &&
+        err.response.data.message
+      ) {
+        alert(err.response.data.message);
+      } else alert('Something went wrong')
+    }
   };
 
   return (
@@ -129,7 +115,7 @@ const Login = () => {
               <span
                 style={{ textDecorationLine: "none" }}
                 className='hover:cursor-pointer mx-auto py-2 text-white bg-blue-600 hover:bg-blue-700 px-8 sm:px-20 font-bold hover:px-28 duration-300 ease-in-out delay-150 rounded'
-                onClick={loginApiCall}>
+                onClick={loginButtonClickHandler}>
                 {loading ? <Loader /> : "Login"}
               </span>
             </div>
