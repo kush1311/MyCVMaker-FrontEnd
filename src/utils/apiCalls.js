@@ -31,6 +31,21 @@ const registerApiCall = async ({ email, password, firstName, lastName }) => {
 
 }
 
+const loginApiCall = async ({ email, password }) => {
+        try {
+            const result = await axios.get(API_URL.LOGIN, {
+                email: encrypt(email),
+                password: encrypt(password),
+            })
+            result.data.userId = decrypt(result.data.userId);
+            result.data.token = decrypt(result.data.token);
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw(error);
+        }
+}
+
 const getResume = async () => {
     const userId = localStorage.getItem("%su!I#d");
 
@@ -120,4 +135,11 @@ const logout_Api_Call = async () => {
         });
 }
 
-export { message, getResume, getResumeData, logout_Api_Call, registerApiCall }
+export {
+    message,
+    getResume,
+    getResumeData,
+    logout_Api_Call,
+    registerApiCall,
+    loginApiCall,
+}
