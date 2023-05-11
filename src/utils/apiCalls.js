@@ -1,30 +1,27 @@
 import axios from "axios";
+import { encrypt, decrypt } from "./crypto";
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 console.log('SERVER_BASE_URL -->', SERVER_BASE_URL);
+console.log(process.env);
 const API_URL = {
     REGISTER: `${SERVER_BASE_URL}/user/register`,
+    LOGIN: `${SERVER_BASE_URL}/user/login`,
 }
 
 const message = {
     logout: "logout",
     server_error: "server",
-    logout: "logout",
-    logout: "logout",
 }
 
-const registerApiCall = async ({
-    email,
-    password,
-    firstName,
-    lastName,
-}) => {
+const registerApiCall = async ({ email, password, firstName, lastName }) => {
     try {
+        console.log(API_URL.REGISTER);
         const result = await axios.post(API_URL.REGISTER, {
-            email,
-            password,
-            firstName,
-            lastName,
+            email: encrypt(email),
+            password: encrypt(password),
+            firstName: encrypt(firstName),
+           lastName: encrypt(lastName),
         })
         return result;
     } catch (error) {
