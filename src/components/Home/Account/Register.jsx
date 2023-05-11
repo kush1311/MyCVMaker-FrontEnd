@@ -44,7 +44,10 @@ const Register = () => {
         err.response.data.message
       ) {
         alert(err.response.data.message);
-      } else alert('Something went wrong');
+      } else if (err && err.message) {
+        alert(err.message);
+      }
+      else alert('Something went wrong');
     }
   };
   return (
