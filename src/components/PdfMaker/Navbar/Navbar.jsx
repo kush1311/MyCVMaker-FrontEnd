@@ -5,7 +5,7 @@ import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import n from "./Navbar.module.css";
 import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { ArrowsExpandIcon } from "@heroicons/react/outline";
-import { logout_Api_Call } from "../../../constants/Api_Calls";
+import { logout_Api_Call } from "../../../utils/apiCalls";
 const Down = React.lazy(() => import("../HiddenPdf/Down/Down"));
 
 const Navbar = () => {

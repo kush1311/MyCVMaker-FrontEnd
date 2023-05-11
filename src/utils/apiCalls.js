@@ -1,12 +1,39 @@
 import axios from "axios";
 
-export { message, getResume, getResumeData, logout_Api_Call }
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
+console.log('SERVER_BASE_URL -->', SERVER_BASE_URL);
+const API_URL = {
+    REGISTER: `${SERVER_BASE_URL}/user/register`,
+}
+
 const message = {
     logout: "logout",
     server_error: "server",
     logout: "logout",
     logout: "logout",
 }
+
+const registerApiCall = async ({
+    email,
+    password,
+    firstName,
+    lastName,
+}) => {
+    try {
+        const result = await axios.post(API_URL.REGISTER, {
+            email,
+            password,
+            firstName,
+            lastName,
+        })
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+
+}
+
 const getResume = async () => {
     const userId = localStorage.getItem("%su!I#d");
 
@@ -95,3 +122,5 @@ const logout_Api_Call = async () => {
 
         });
 }
+
+export { message, getResume, getResumeData, logout_Api_Call, registerApiCall }

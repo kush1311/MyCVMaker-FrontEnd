@@ -5,7 +5,7 @@ import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { Footer, NavBar } from "../Home";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import r from "./Register.module.css";
-import { getResumeData } from "../../../constants/Api_Calls";
+import { getResumeData } from "../../../utils/apiCalls";
 import { Loader } from "../../../constants/Loader";
 import { Helmet } from "react-helmet";
 

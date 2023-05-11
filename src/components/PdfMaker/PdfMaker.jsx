@@ -15,7 +15,7 @@ import clone from "just-clone";
 import { AuthContext } from "./../ProtectedRoutes/AuthenticationApi";
 import { getAllResumes } from "../ProtectedRoutes/ProtectedRoute";
 import { Redirect } from "react-router-dom";
-import { getResume, getResumeData, message } from "../../constants/Api_Calls";
+import { getResume, getResumeData, message } from "../../utils/apiCalls";
 import { Helmet } from "react-helmet";
 // const PDFViewer = lazy(() => import("./PDFViewer/PDFViewer"));
 

@@ -5,6 +5,7 @@ import { Loader } from "../../../constants/Loader";
 import { Footer, NavBar } from "../Home";
 import r from "./Register.module.css";
 import { Helmet } from "react-helmet";
+import { registerApiCall } from "../../../utils/apiCalls";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ const Register = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const registerApiCall = () => {
+  const registerButtonClickHandler = async () => {
     setLoading(true);
     //console.log(email + "  " + password);
     if (password.length < 8) {
@@ -24,33 +25,24 @@ const Register = () => {
       setLoading(false);
       return;
     }
-    axios
-      .post(`${process.env.REACT_APP_URL}/register`, {
-        email,
-        password,
-        firstName,
-        lastName,
-      })
-      .then((res) => {
-        setLoading(false);
-        // localStorage.setItem("lstoreCook", res.data.split(" ")[1]);
-        //console.log(res);
-        if (res && res.status === 201) {
-          history.replace("/login");
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        //console.log(err);
-        if (
-          err &&
-          err.response &&
-          err.response.data &&
-          err.response.data.message
-        ) {
-          alert(err.response.data.message);
-        }
-      });
+    try {
+      console.log('Inside try');
+      const res = await registerApiCall();
+      setLoading(false);
+      if (res && res.status === 201) {
+        history.replace("/login");
+      }
+    } catch (err) {
+      setLoading(false);
+      if (
+        err &&
+        err.response &&
+        err.response.data &&
+        err.response.data.message
+      ) {
+        alert(err.response.data.message);
+      } else alert('Something went wrong');
+    }
   };
   return (
     <div>
@@ -119,7 +111,7 @@ const Register = () => {
             <span
               style={{ textDecorationLine: "none" }}
               className='hover:cursor-pointer mx-auto text-white font-bold bg-blue-600 py-2 px-8 sm:px-20 rounded delay-150 duration-300 hover:px-20 hover:sm:px-28 hover:bg-blue-700'
-              onClick={registerApiCall}>
+              onClick={registerButtonClickHandler}>
               {loading ? <Loader /> : "Register"}
             </span>
           </div>
