@@ -6,6 +6,7 @@ import { Footer, NavBar } from "../Home";
 import r from "./Register.module.css";
 import { Helmet } from "react-helmet";
 import { registerApiCall } from "../../../utils/apiCalls";
+import { LOGIN_ROUTE } from "../../../constants/routes";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const Register = () => {
       });
       setLoading(false);
       if (res && res.status === 201) {
-        history.replace("/login");
+        history.replace(LOGIN_ROUTE);
       }
     } catch (err) {
       setLoading(false);

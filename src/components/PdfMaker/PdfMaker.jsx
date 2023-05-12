@@ -17,6 +17,8 @@ import { getAllResumes } from "../ProtectedRoutes/ProtectedRoute";
 import { Redirect } from "react-router-dom";
 import { getResume, getResumeData, message } from "../../utils/apiCalls";
 import { Helmet } from "react-helmet";
+import PleaseLoginModal from "../Modals/PleaseLoginModal";
+import { LOGIN_ROUTE } from "../../constants/routes";
 // const PDFViewer = lazy(() => import("./PDFViewer/PDFViewer"));
 
 // TODO: Lazy loading of HiddenPdf could be solution for slow rendring
@@ -299,7 +301,7 @@ export default class PdfMaker extends Component {
     const rId = localStorage.getItem("%ru!I#d");
     const userId = localStorage.getItem("%su!I#d");
     if (!this.state.isAuth) {
-      return <Redirect to='/login' />;
+      return <Redirect to={LOGIN_ROUTE} />;
     }
     if (!this.context.cv && userId && rId) {
       this.callCVData();
@@ -310,10 +312,10 @@ export default class PdfMaker extends Component {
       } else if (!localStorage.getItem("store")) {
         this.set_LocalStorage();
       } else {
-        return <Redirect to='/login' />;
+        return <Redirect to={LOGIN_ROUTE} />;
       }
     }
-
+console.log('this.context.state.pleaseLoginModalShowed', this.context.state.pleaseLoginModalShowed);
     return (
       <>
         {this.context.state.fullscreen ? (
@@ -321,7 +323,10 @@ export default class PdfMaker extends Component {
         ) : (
           <></>
         )}
-
+        {
+          this.context.state.pleaseLoginModalShowed ? (<></>) : (<PleaseLoginModal/>)
+        }
+        
         <div className={`${pmaker.layout} fluid-container`}>
           <Helmet>
             <title> Editor </title>

@@ -17,6 +17,7 @@ import {
 // import { AnnotationIcon, ChevronDoubleRightIcon, HomeIcon } from "@heroicons/react/outline";
 import image from "../../Resume Image/R1.png";
 import { Helmet } from "react-helmet";
+import { FEEDBACK_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESUME_BUILDER_ROUTE } from "../../constants/routes"
 
 export const NavBar = () => {
   const NavButtonClass =
@@ -24,7 +25,7 @@ export const NavBar = () => {
   return (
     <nav className='flex px-2 py-1 font-bold mb-5 bg-slate-700 border-b-2 border-stone-400'>
       <span className='px-3 text-center flex'>
-        <Link to='/' style={{ textDecorationLine: "none" }} className='my-auto'>
+        <Link to={HOME_ROUTE} style={{ textDecorationLine: "none" }} className='my-auto'>
           <span className='flex w-8 text-yellow-400'>
             <HomeIcon />
           </span>
@@ -35,7 +36,7 @@ export const NavBar = () => {
       </span>
       <div className='flex ml-auto'>
         <Link
-          to='/login'
+          to={LOGIN_ROUTE}
           style={{ textDecorationLine: "none" }}
           className={`${NavButtonClass} flex`}>
           Login
@@ -113,7 +114,7 @@ const HaveALookButton = () => {
       <Link
         style={{ textDecoration: "none" }}
         className='flex px-4 py-2 font-bold text-2xl rounded bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-black active:shadow-white'
-        to='/register'>
+        to={`${RESUME_BUILDER_ROUTE}`}>
         {/* <AnnotationIcon className='w-10 mr-2' /> */}
         Make My Resume
         <ChevronDoubleRightIcon className='w-10 ml-2' />
@@ -219,31 +220,31 @@ export const Footer = () => {
       <div className='my-3 pl-5 mx-auto'>
         <ul className='grid grid-cols-2 sm:grid-cols-3 gap-3'>
           <li className={listItem}>
-            <Link className={linkStyle} to='/'>
+            <Link className={linkStyle} to={HOME_ROUTE}>
               Home
               <HomeIcon className={iconClass} />
             </Link>
           </li>
           <li className={listItem}>
-            <Link className={linkStyle} to='/login'>
+            <Link className={linkStyle} to={LOGIN_ROUTE}>
               Login
               <UserIcon className={iconClass} />
             </Link>
           </li>
           <li className={listItem}>
-            <Link className={linkStyle} to='/feedback'>
+            <Link className={linkStyle} to={FEEDBACK_ROUTE}>
               Feedback
               <PencilAltIcon className={iconClass} />
             </Link>
           </li>
           <li className={listItem}>
-            <Link className={linkStyle} to='/register'>
+            <Link className={linkStyle} to={RESUME_BUILDER_ROUTE}>
               Editor
               <ChevronDoubleRightIcon className={iconClass} />
             </Link>
           </li>
           <li className={listItem}>
-            <Link className={linkStyle} to='/register'>
+            <Link className={linkStyle} to={REGISTER_ROUTE}>
               Register
               <UserAddIcon className={iconClass} />
             </Link>

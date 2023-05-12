@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Footer, NavBar } from "../Home/Home";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { HOME_ROUTE } from "../../constants/routes";
 
 const Feedback = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ const Feedback = () => {
       .then((res) => {
         if (res && res.status && res.status === 201) {
           alert("Feedback sent successfully");
-          history.replace("/");
+          history.replace(HOME_ROUTE);
         }
       })
       .catch((err) => {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { Redirect, Route, useHistory } from "react-router-dom";
+import { RESUME_BUILDER_ROUTE } from "../../constants/routes";
 import { Context } from "../GlobalContextApi/GlobalContextApi";
 import PdfMaker from "../PdfMaker/PdfMaker";
 import { AuthContext } from "./AuthenticationApi";
@@ -21,7 +22,7 @@ const ProtectedRoute = (props) => {
   // }
   return (
     <>
-      <Route path='/resume-builder' component={PdfMaker} />
+      <Route path={RESUME_BUILDER_ROUTE} component={PdfMaker} />
     </>
   );
 };

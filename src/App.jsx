@@ -12,6 +12,7 @@ import Register from "./components/Home/Account/Register";
 import axios from "axios";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 import AuthenticationApi from "./components/ProtectedRoutes/AuthenticationApi";
+import { FEEDBACK_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESUME_BUILDER_ROUTE } from "./constants/routes";
 // import PdfMaker from "./components/PdfMaker/PdfMaker";
 const PdfMaker = React.lazy(() => import("./components/PdfMaker/PdfMaker"));
 const Loading = () => {
@@ -27,12 +28,12 @@ export default class App extends Component {
             <GlobalContextApi>
               <AuthenticationApi>
                 <Switch>
-                  <Route path='/feedback' exact component={Feedback} />
-                  <Route path='/login' exact component={Login} />
-                  <Route path='/register' exact component={Register} />
-                  <Route path='/' exact component={Home} />
+                  <Route path={FEEDBACK_ROUTE} exact component={Feedback} />
+                  <Route path={LOGIN_ROUTE} exact component={Login} />
+                  <Route path={REGISTER_ROUTE} exact component={Register} />
+                  <Route path={HOME_ROUTE} exact component={Home} />
                   <Suspense fallback={<Loading />}>
-                    <Route exact path='/resume-builder' component={PdfMaker} />
+                    <Route exact path={RESUME_BUILDER_ROUTE} component={PdfMaker} />
                   </Suspense>
                   <Route component={NotFound} />
                 </Switch>

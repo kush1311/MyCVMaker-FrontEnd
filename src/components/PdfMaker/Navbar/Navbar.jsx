@@ -6,6 +6,7 @@ import n from "./Navbar.module.css";
 import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { ArrowsExpandIcon } from "@heroicons/react/outline";
 import { logout_Api_Call } from "../../../utils/apiCalls";
+import { HOME_ROUTE } from "../../../constants/routes";
 const Down = React.lazy(() => import("../HiddenPdf/Down/Down"));
 
 const Navbar = () => {
@@ -50,7 +51,7 @@ const Navbar = () => {
           />
         </Suspense>
         <a
-          href='/'
+          href={HOME_ROUTE}
           className={
             n.signoutbutton +
             " btn btn-sm text-red-600 hover:text-white hover:bg-red-700 "
