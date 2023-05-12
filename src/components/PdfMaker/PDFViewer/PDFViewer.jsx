@@ -13,22 +13,6 @@ import "./PDFViewer.css";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-// const ref = React.createRef();
-
-// const Demo = () => {
-//   return (
-//     <div>
-//       <Pdf targetRef={ref} filename='code-example.pdf'>
-//         {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
-//       </Pdf>
-//       <div ref={ref}>
-//         <h1>Hello CodeSandbox</h1>
-//         <h2>Start editing to see some magic happen!</h2>
-//       </div>
-//     </div>
-//   );
-// };
-var count = 0;
 const PDFViewer = (props) => {
   var w = window.innerWidth;
   const [width, height] = useWindowSize();
@@ -113,42 +97,6 @@ const PDFViewer = (props) => {
       </div>
     </>
   );
-};
-// const PGComp = () => {
-//   <Pg
-//     height={api.state.fullscreen ? height * 0.9 : height1}
-//     className='mx-auto border OutLine pg'
-//     pageNumber={pageNumber}
-//     loading={() => {
-//       return <h1>Loading</h1>;
-//     }}
-//   />;
-// };
-const Comp = ({
-  api,
-  height,
-  height1,
-  pageNumber,
-  onLoadSuccess,
-  file,
-  PGComp,
-}) => {
-  //console.log(file);
-  try {
-    return (
-      <Doc
-        loading={() => {
-          return <h1>Loading was here</h1>;
-        }}
-        onLoadSuccess={onLoadSuccess}
-        file={file}>
-        {/* <PGComp /> */}
-      </Doc>
-    );
-  } catch (e) {
-    //console.log(e.message);
-    return <h4>Wait....</h4>;
-  }
 };
 export default PDFViewer;
 
