@@ -1,6 +1,6 @@
 import React from 'react'
 
-function PDFViewPageNevigation({pageNumber, setPageNum, numOfPages, api}) {
+function PDFViewPageNevigation({pageNumber, setPageNumberHandler, totalPages, api}) {
   return (
     <>
         <div className='fluid-container mb-2'>
@@ -10,7 +10,7 @@ function PDFViewPageNevigation({pageNumber, setPageNum, numOfPages, api}) {
               <button
                 className='btn btn-sm bg-info text-white mx-auto'
                 onClick={() => {
-                  setPageNum(-1);
+                  setPageNumberHandler(-1);
                 }}>
                 Previous
               </button>
@@ -25,13 +25,13 @@ function PDFViewPageNevigation({pageNumber, setPageNum, numOfPages, api}) {
             </strong>
           </div>
           <div className='col-2'>
-            {pageNumber === numOfPages ? (
+            {pageNumber === totalPages ? (
               <></>
             ) : (
               <button
                 className='btn btn-sm bg-info text-white mr-auto'
                 onClick={() => {
-                  setPageNum(1);
+                  setPageNumberHandler(1);
                 }}>
                 Next
               </button>

@@ -7,7 +7,7 @@
 // *
 
 import React, { useContext, useLayoutEffect, useState } from "react";
-import { Document as Doc, Page as Pg, pdfjs } from "react-pdf";
+import { Document as PDFViewerDocument, Page as PDFViewerPage, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "./PDFViewer.css";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
@@ -17,17 +17,22 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const PDFViewer = (props) => {
   var w = window.innerWidth;
   const [width, height] = useWindowSize();
+
   const [pageNumber, setPageNumber] = useState(1);
-  const [numOfPages, setNumOfPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const api = useContext(Context);
-  const setPageNum = (i) => {
-    if ((i === 1 && pageNumber < numOfPages) || (i === -1 && pageNumber > 1)) {
+
+  const setPageNumberHandler = (i) => {
+    if ((i === 1 && pageNumber < totalPages) || (i === -1 && pageNumber > 1)) {
       setPageNumber(pageNumber + i);
     }
   };
+
   const onLoadSuccess = ({ numPages }) => {
-    setNumOfPages(numPages);
+    setTotalPages(numPages);
   };
+
   // TODO It deosnt support IE8 or less for that use div.offsetWidth
   try {
     var div = document.getElementById("id").getBoundingClientRect();
@@ -35,13 +40,14 @@ const PDFViewer = (props) => {
   } catch (e) {
     console.log(e);
   }
+
   return (
     <>
-      <PDFViewPageNevigation setPageNum={setPageNum} pageNumber={pageNumber} numOfPages={numOfPages} api={api} />
+      <PDFViewPageNevigation setPageNumberHandler={setPageNumberHandler} pageNumber={pageNumber} totalPages={totalPages} api={api} />
       <div className='my-auto p-0 d-flex justify-content-center mx-auto'>
-        <Doc renderMode='canvas' onLoadSuccess={onLoadSuccess} file={props.src}>
+        <PDFViewerDocument renderMode='canvas' onLoadSuccess={onLoadSuccess} file={props.src}>
           {/* <Doc renderMode='svg' onLoadSuccess={onLoadSuccess} file={pdfFile}> */}
-          <Pg
+          <PDFViewerPage
             height={api.state.fullscreen ? height * 1.5 : height1}
             className='mx-auto border pg'
             pageNumber={pageNumber}
@@ -49,7 +55,7 @@ const PDFViewer = (props) => {
               return <h1>Loading</h1>;
             }}
           />
-        </Doc>
+        </PDFViewerDocument>
       </div>
     </>
   );
