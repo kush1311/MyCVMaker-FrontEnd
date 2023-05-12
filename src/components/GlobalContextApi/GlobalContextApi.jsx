@@ -239,6 +239,7 @@ class GlobalContextApi extends Component {
     headerLayout: 1,
     headerCustomFieldLayout: 2,
     headingLayout: 9,
+    pleaseLoginModalShowed: false,
     // Too help with updated and non updated databases differentiation
     version: 0,
   };
@@ -661,6 +662,11 @@ class GlobalContextApi extends Component {
     });
     return index;
   };
+  handlePleaseLoginModalShowed = (booleanValue) => {
+    this.setState({
+      pleaseLoginModalShowed: booleanValue,
+    })
+  }
   componentDidMount() {
     if (this.state.cv && this.state.cv[0]) {
       this.setEditor(true, "headerComponent", this.state.cv[0].data, "header");
@@ -723,6 +729,7 @@ class GlobalContextApi extends Component {
           customListItemStyleType: this.customListItemStyleType,
           styleHandler: this.styleHandler,
           skillsHideHandler: this.skillsHideHandler,
+          handlePleaseLoginModalShowed: this.handlePleaseLoginModalShowed,
         }}>
         {this.props.children}
       </Provider>
