@@ -32,56 +32,12 @@ const PDFViewer = (props) => {
   try {
     var div = document.getElementById("id").getBoundingClientRect();
     var height1 = Math.min(div.width * Math.sqrt(2) - 10, 0.8 * height);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
   return (
     <>
-      <div className='fluid-container mb-2'>
-        <div className='row'>
-          <div className='col-4 text-right'>
-            {pageNumber > 1 ? (
-              <button
-                className='btn btn-sm bg-info text-white mx-auto'
-                onClick={() => {
-                  setPageNum(-1);
-                }}>
-                Previous
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className='col-4 text-center'>
-            {" "}
-            <strong style={{ fontSize: "1rem" }} className='mx-auto'>
-              <span style={{ color: "#007bff" }}> {pageNumber}</span>
-            </strong>
-          </div>
-          <div className='col-2'>
-            {pageNumber === numOfPages ? (
-              <></>
-            ) : (
-              <button
-                className='btn btn-sm bg-info text-white mr-auto'
-                onClick={() => {
-                  setPageNum(1);
-                }}>
-                Next
-              </button>
-            )}
-          </div>
-          <div className='col-2 text-center'>
-            {api.state.fullscreen ? (
-              <button
-                onClick={api.toggleFullscreen}
-                className='bg-danger text-white btn btn-sm mr-0'>
-                Close
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
-      </div>
+      <PDFViewPageNevigation setPageNum={setPageNum} pageNumber={pageNumber} numOfPages={numOfPages} api={api} />
       <div className='my-auto p-0 d-flex justify-content-center mx-auto'>
         <Doc renderMode='canvas' onLoadSuccess={onLoadSuccess} file={props.src}>
           {/* <Doc renderMode='svg' onLoadSuccess={onLoadSuccess} file={pdfFile}> */}
