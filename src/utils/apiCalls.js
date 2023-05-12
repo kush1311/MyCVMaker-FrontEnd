@@ -1,6 +1,8 @@
 import axios from "axios";
 import { encrypt, decrypt } from "./crypto";
 
+axios.defaults.withCredentials = true
+
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 console.log('SERVER_BASE_URL -->', SERVER_BASE_URL);
 console.log(process.env);
@@ -33,12 +35,9 @@ const registerApiCall = async ({ email, password, firstName, lastName }) => {
 
 const loginApiCall = async ({ email, password }) => {
         try {
-            const result = await axios.get(API_URL.LOGIN, {
-                email: encrypt(email),
-                password: encrypt(password),
-            })
+            const result = await axios.get(`${API_URL.LOGIN}/${encrypt(email)}/${encrypt(password)}`)
             result.data.userId = decrypt(result.data.userId);
-            result.data.token = decrypt(result.data.token);
+            console.log(result.data.userId)
             return result;
         } catch (error) {
             console.log(error);
