@@ -6,11 +6,12 @@
 // *
 // *
 
-import React, { useEffect, useContext, useLayoutEffect, useState } from "react";
-import { Document as Doc, Page as Pg, pdfjs, Outline } from "react-pdf";
+import React, { useContext, useLayoutEffect, useState } from "react";
+import { Document as Doc, Page as Pg, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "./PDFViewer.css";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
+import PDFViewPageNevigation from "./subComponents/PDFViewPageNevigation";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PDFViewer = (props) => {
@@ -21,7 +22,6 @@ const PDFViewer = (props) => {
   const api = useContext(Context);
   const setPageNum = (i) => {
     if ((i === 1 && pageNumber < numOfPages) || (i === -1 && pageNumber > 1)) {
-      //console.log(pageNumber + "  " + i);
       setPageNumber(pageNumber + i);
     }
   };
