@@ -53,7 +53,7 @@ export default class PdfMaker extends Component {
   getPdfUrl = () => {
     if (document.getElementById("Thisisid") != null) {
       var src = document.getElementById("Thisisid").src;
-      if (src != this.state.src) {
+      if (src !== this.state.src) {
         this.setState({
           src: src,
         });
@@ -313,25 +313,6 @@ export default class PdfMaker extends Component {
         return <Redirect to='/login' />;
       }
     }
-
-    // //console.log("2 Rendering..........");
-    // onLoad={checkIframeLoaded()}
-    // * Phase@2
-    // const isMatch =
-    //   JSON.stringify(this.context.cv) === JSON.stringify(this.state.cv) &&
-    //   JSON.stringify(this.context.styles) ===
-    //     JSON.stringify(this.state.styles) &&
-    //   JSON.stringify(this.context.imageConfig) ===
-    //     JSON.stringify(this.state.imageConfig) &&
-    //   JSON.stringify(this.context.rows) === JSON.stringify(this.state.rows) &&
-    //   JSON.stringify(this.context.footer) ===
-    //     JSON.stringify(this.state.footer) &&
-    //   JSON.stringify(this.context.skillsItemConfig) ===
-    //     JSON.stringify(this.state.skillsItemConfig) &&
-    //   JSON.stringify(this.context.headerListItemConfig) ===
-    //     JSON.stringify(this.state.headerListItemConfig) &&
-    //   JSON.stringify(this.context.version) ===
-    //     JSON.stringify(this.state.version);
 
     return (
       <>
