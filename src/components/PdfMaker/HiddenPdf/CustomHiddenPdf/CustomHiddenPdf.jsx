@@ -15,14 +15,14 @@ const style = StyleSheet.create({
 });
 
 const CustomHiddenPdf = (props) => {
-  const { rootObj, api } = props;
-  if (rootObj.hide) return null;
+  const { componentData, api } = props;
+  if (componentData.hide) return null;
   //   //console.log(props);
   return (
     <View>
-      <HeaderName api={api} headerName={rootObj.headerName} />
+      <HeaderName api={api} headerName={componentData.headerName} />
       <View>
-        {rootObj.data.map((obj, index) => {
+        {componentData.data.map((obj, index) => {
           return <WhichComponent api={api} obj={obj} index={index} />;
         })}
       </View>

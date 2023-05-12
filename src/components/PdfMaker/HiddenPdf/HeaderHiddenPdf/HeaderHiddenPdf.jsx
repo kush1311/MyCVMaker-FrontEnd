@@ -2,8 +2,8 @@ import { View } from "@react-pdf/renderer";
 import React from "react";
 import GiveLayout from "./Layouts/HeaderHiddenPdf_Layout";
 
-const HeaderHiddenPdf = ({ rootObj, api }) => {
-  if (rootObj.hide) return null;
+const HeaderHiddenPdf = ({ componentData, api }) => {
+  if (componentData.hide) return null;
   // if(r)
   const general = api.styles.general;
   // console.log(api.state.headerLayout);
@@ -21,7 +21,7 @@ const HeaderHiddenPdf = ({ rootObj, api }) => {
         <GiveLayout
           num={api.state.headerLayout}
           api={api}
-          data={rootObj.data}
+          data={componentData.data}
         />
       </View>
     </View>

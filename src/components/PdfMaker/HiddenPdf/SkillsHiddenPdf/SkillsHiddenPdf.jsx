@@ -5,17 +5,17 @@ import ArrowDesign from "../MiniComponents/ArrowDesign";
 import BulletPoint from "../MiniComponents/BulletPoint";
 import HeaderName from "../MiniComponents/HeaderName";
 
-// todo: Align single litem list to left side
+// todo: Align single item list to left side
 const SkillsHiddenPdf = (props) => {
-  if (props.rootObj.hide) return null;
-  const { api, rootObj } = props;
+  if (props.componentData.hide) return null;
+  const { api, componentData } = props;
   let count = 0;
-  rootObj.data.map((obj) => {
+  componentData.data.map((obj) => {
     if (!obj.hide) ++count;
   });
   return (
     <View>
-      <HeaderName api={api} headerName={props.rootObj.headerName} />
+      <HeaderName api={api} headerName={props.componentData.headerName} />
       <View
         style={{
           display: "flex",
@@ -23,7 +23,7 @@ const SkillsHiddenPdf = (props) => {
           flexWrap: "wrap",
           justifyContent: count === 1 ? "flex-start" : "space-start",
         }}>
-        {props.rootObj.data.map((dataObj, index) => {
+        {props.componentData.data.map((dataObj, index) => {
           if (dataObj.hide) return;
           let flag = false;
           if (!dataObj.fieldName.trim()) {

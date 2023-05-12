@@ -20,20 +20,14 @@ import ExperienceHiddenPdf from "./ExperienceHiddenPdf/ExperienceHiddenPdf";
 import CustomHiddenPdf from "./CustomHiddenPdf/CustomHiddenPdf";
 import FooterHiddenPdf from "./FooterHiddenPdf/FooterHiddenPdf";
 import Calibri_Regular from "../../../Fonts/calibri-font-family/calibri-regular.ttf";
-
 import Calibri_Bold from "../../../Fonts/calibri-font-family/calibri-bold.ttf";
-
 import Calibri_Italic from "../../../Fonts/calibri-font-family/calibri-italic.ttf";
-
 import Calibri_Bold_Italic from "../../../Fonts/calibri-font-family/calibri-bold-italic.ttf";
-
 import Times_New_Roman from "../../../Fonts/Times-New-Roman/times new roman.ttf";
-
 import Times_New_Roman_Bold from "../../../Fonts/Times-New-Roman/times new roman bold.ttf";
-
 import Times_New_Roman_Italic from "../../../Fonts/Times-New-Roman/times new roman italic.ttf";
-
 import Times_New_Roman_Bold_Italic from "../../../Fonts/Times-New-Roman/times new roman bold italic.ttf";
+
 class HiddenPdf extends React.Component {
   state = {
     label: this.context,
@@ -135,10 +129,10 @@ const MyDocument = ({ api }) => {
   if (!api.state.rows) return null;
   if (!api.state.cv.length) return null;
   if (!api.state.rows.length) return null;
-  // console.log(api.state.rows);
+  console.log(api);
   return (
     <Document
-      author='www.MyCVMaker.com'
+      author='www.MyCVMaker.com' // Add author and other options etc. according to user
       producer='www.MyCVMaker.com'
       creator='MyCVMaker'
       subject='Resume'
@@ -152,22 +146,18 @@ const MyDocument = ({ api }) => {
           {/* {!api.state.cv?return null:<></>} */}
           {api.state &&
             api.state.rows &&
-            api.state.rows.map((indexArray, i) => {
+            api.state.rows.map((componentIndexArray, i) => {
               return (
                 <View
                   style={{
                     display: "flex",
                     flexDirection: "row",
                   }}>
-                  {indexArray &&
-                    indexArray.map((index, subIndex) => {
-                      const rootObj = api.cv[index];
-                      // //console.log(index);
-                      // //console.log(rootObj);
-                      // if (!rootObj) return null;
-                      // //console.log(rootObj.headerName);
-                      if (!rootObj) return null;
-                      if (!rootObj.headerName) return null;
+                  {componentIndexArray &&
+                    componentIndexArray.map((componentIndexNumber) => {
+                      const componentData = api.cv[componentIndexNumber];
+                      if (!componentData) return null;
+                      if (!componentData.headerName) return null;
                       return (
                         <View
                           style={{
@@ -177,16 +167,16 @@ const MyDocument = ({ api }) => {
                             letterSpacing: general.letterSpacing,
                             fontFamily: general.fontFamily,
                             paddingRight:
-                              rootObj.headerName === "Header"
+                            componentData.headerName === "Header"
                                 ? 0
                                 : general.paddingRight,
                             paddingLeft:
-                              rootObj.headerName === "Header"
+                            componentData.headerName === "Header"
                                 ? 0
                                 : general.paddingLeft,
                           }}
                           key={i}>
-                          <WhichComponent api={api} rootObj={rootObj} />
+                          <WhichComponent api={api} componentData={componentData} />
                         </View>
                       );
                     })}
@@ -211,17 +201,17 @@ const MyDocument = ({ api }) => {
 };
 export { MyDocument };
 
-const WhichComponent = ({ rootObj, api }) => {
-  if (!rootObj) return null;
-  const componentId = rootObj.componentId;
+const WhichComponent = ({ componentData, api }) => {
+  if (!componentData) return null;
+  const componentId = componentData.componentId;
   if (componentId === "skillsComponent")
-    return <SkillsHiddenPdf api={api} rootObj={rootObj} />;
+    return <SkillsHiddenPdf api={api} componentData={componentData} />;
   else if (componentId === "headerComponent") {
-    return <HeaderHiddenPdf api={api} rootObj={rootObj} />;
+    return <HeaderHiddenPdf api={api} componentData={componentData} />;
   } else if (componentId === "experienceComponent") {
-    return <ExperienceHiddenPdf api={api} rootObj={rootObj} />;
+    return <ExperienceHiddenPdf api={api} componentData={componentData} />;
   } else if (componentId === "customComponent") {
-    return <CustomHiddenPdf api={api} rootObj={rootObj} />;
+    return <CustomHiddenPdf api={api} componentData={componentData} />;
   } else {
     return null;
   }

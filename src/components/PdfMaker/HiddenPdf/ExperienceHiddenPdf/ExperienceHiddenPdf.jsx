@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 import HeaderName from "../MiniComponents/HeaderName";
 
-const ExperienceHiddenPdf = ({ api, rootObj }) => {
+const ExperienceHiddenPdf = ({ api, componentData }) => {
   let flag = false;
-  if (rootObj.hide) return null;
-  rootObj.data.map((obj, index) => {
+  if (componentData.hide) return null;
+  componentData.data.map((obj, index) => {
     if (!obj.hide) {
       flag = true;
       return;
@@ -14,9 +14,9 @@ const ExperienceHiddenPdf = ({ api, rootObj }) => {
   if (!flag) return null;
   return (
     <View>
-      <HeaderName api={api} headerName={rootObj.headerName} />
+      <HeaderName api={api} headerName={componentData.headerName} />
       <View>
-        {rootObj.data.map((obj, index) => {
+        {componentData.data.map((obj, index) => {
           return <ExpItem api={api} index={index} obj={obj} />;
         })}
       </View>

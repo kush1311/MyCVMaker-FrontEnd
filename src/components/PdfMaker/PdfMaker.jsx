@@ -333,6 +333,7 @@ export default class PdfMaker extends Component {
           <Navbar />
 
           <HiddenPdf />
+
           <div
             style={{ maxWidth: "2560px" }}
             className={"fluid-container mx-auto"}>
