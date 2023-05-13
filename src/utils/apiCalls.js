@@ -9,6 +9,8 @@ console.log(process.env);
 const API_URL = {
     REGISTER: `${SERVER_BASE_URL}/user/register`,
     LOGIN: `${SERVER_BASE_URL}/user/login`,
+    USER_BASE_URL: `${SERVER_BASE_URL}/user`,
+    VERIFY_TOKEN: `${SERVER_BASE_URL}/verify-token`,
 }
 
 const message = {
@@ -35,7 +37,7 @@ const registerApiCall = async ({ email, password, firstName, lastName }) => {
 
 const loginApiCall = async ({ email, password }) => {
         try {
-            const result = await axios.get(`${API_URL.LOGIN}/${encrypt(email)}/${encrypt(password)}`)
+            const result = await axios.get(`${API_URL.LOGIN}/${encrypt(email)}/${encrypt(password)}`);
             const {userData} = result.data;
             const userId = decrypt(userData.userId);
             const firstName = decrypt(userData.firstName);
@@ -52,6 +54,27 @@ const loginApiCall = async ({ email, password }) => {
         }
 }
 
+const verifyTokenApiCall = async () => {
+    try {
+        const result = await axios.get(API_URL.VERIFY_TOKEN);
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.log(error);
+        console.log(error.response)
+        throw error;
+    }
+}
+
+const createResumeApiCall = async (userId) => {
+    try {
+        const result = await axios.post(`${API_URL.USER_BASE_URL}/${encrypt(userId)}/resume/`)
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 const getResume = async () => {
     const userId = localStorage.getItem("%su!I#d");
 
@@ -76,19 +99,14 @@ const getResume = async () => {
                     return message.logout
                 }
             }
-
-
         });
 }
 const getResumeData = async () => {
     const userId = localStorage.getItem("%su!I#d");
     const resumeId = localStorage.getItem("%ru!I#d");
 
-    if (!userId && !resumeId) {
-        return message.logout
-    }
     return await axios
-        .get(`${process.env.REACT_APP_URL}/resume/${userId}/${resumeId}`)
+        .get(`${API_URL.USER_BASE_URL}/${encrypt(userId)}/resume/${encrypt(resumeId)}`)
         .then((res) => {
             //console.log(res.data[0])
             if (res && res.data && res.data && res.status && res.status === 200) {
@@ -143,9 +161,11 @@ const logout_Api_Call = async () => {
 
 export {
     message,
+    createResumeApiCall,
     getResume,
     getResumeData,
     logout_Api_Call,
     registerApiCall,
     loginApiCall,
+    verifyTokenApiCall,
 }
