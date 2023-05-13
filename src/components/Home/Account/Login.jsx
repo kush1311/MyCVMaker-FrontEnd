@@ -5,10 +5,11 @@ import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { Footer, NavBar } from "../Home";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import r from "./Register.module.css";
-import { getResumeData } from "../../../utils/apiCalls";
+import { createResumeApiCall, getResumeData } from "../../../utils/apiCalls";
 import { Loader } from "../../../constants/Loader";
 import { Helmet } from "react-helmet";
 import { loginApiCall } from "../../../utils/apiCalls"
+import { RESUME_BUILDER_ROUTE } from "../../../constants/routes";
 // axios.defaults.withCredentials = true;
 const Login = () => {
   const history = useHistory();
@@ -16,8 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const authApi = useContext(AuthContext);
-  const api = useContext(Context);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -27,17 +27,15 @@ const Login = () => {
     try {
       const res = await loginApiCall({email, password});
       if (res && res.status === 200) {
-        localStorage.setItem("%su!I#d", res.data.userId);
-        localStorage.setItem("%ru!I#d", res.data.resumeId);
-        if (localStorage.getItem("store")) {
-          localStorage.removeItem("store");
+        alert(res.userId);
+        if (res.resumeIdArray.length === 0) {
+          const createResumeApiCallResult = await createResumeApiCall(res.userId);
+          if (createResumeApiCallResult && createResumeApiCallResult.status && createResumeApiCallResult.status === 201) {
+            console.log('createResumeApiCallResult')
+            console.log(createResumeApiCallResult);
+          }
         }
-        let data = await getResumeData();
-        api.updateCV(data);
-        setLoading(false);
-        setTimeout(() => {
-          history.push("/resume-builder/");
-        }, 200);
+        history.push(RESUME_BUILDER_ROUTE);
       };
       setLoading(false);
     } catch (err) {
@@ -51,6 +49,7 @@ const Login = () => {
         alert(err.response.data.message);
       } else alert('Something went wrong')
     }
+    
   };
 
   return (
