@@ -7,6 +7,14 @@ const Editor = (props) => {
   const api = useContext(Context);
   const [saving, setSave] = useState(false);
   const saveHandler = () => {
+    if (api.disableSaveButton) {
+      if (api.networkError) {
+        alert("Network Error");
+      } else if (api.isUserLoggedIn === false) {
+        alert("Please login !!");
+      }
+      return;
+    };
     const rId = localStorage.getItem("%ru!I#d");
     const uId = localStorage.getItem("%su!I#d");
     if (!uId) {
@@ -51,6 +59,14 @@ const Editor = (props) => {
         }
       });
   };
+  const getSaveButtonClassName = () => {
+    let classNames = 'mx-auto absolute px-20 bg-blue-600 btn text-white btn-md bottom-0 shadow-fuchsia-800 shadow-2xl'
+    classNames = `${classNames} ${api.disableSaveButton ? 'bg-slate-500' : 'bg-fuchsia-700'}`
+    return classNames;
+  }
+  if ((api.isUserLoggedIn === false || api.networkError) && !api.disableSaveButton) {
+    api.handleSaveButtonVisibility(true);
+  }
   return (
     <div className='relative'>
       <div
@@ -59,11 +75,11 @@ const Editor = (props) => {
         {api.state.editor}
       </div>
       <div className='flex po'>
-        <button
-          className={`mx-auto absolute px-20 bg-blue-600 btn text-white btn-md bottom-0 bg-fuchsia-700 shadow-fuchsia-800 shadow-2xl`}
+        <div
+          className={getSaveButtonClassName()}
           onClick={saveHandler}>
           {saving ? <Loader /> : "Save"}
-        </button>
+        </div>
       </div>
     </div>
   );
