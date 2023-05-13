@@ -7,6 +7,7 @@ import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { ArrowsExpandIcon } from "@heroicons/react/outline";
 import { logout_Api_Call } from "../../../utils/apiCalls";
 import { HOME_ROUTE } from "../../../constants/routes";
+import { useEffect } from "react";
 const Down = React.lazy(() => import("../HiddenPdf/Down/Down"));
 
 const Navbar = () => {
@@ -14,6 +15,12 @@ const Navbar = () => {
   const authApi = useContext(AuthContext);
   const history = useHistory();
   const handler = async () => {
+    console.log('api.disableLogoutButton');
+    console.log(api.disableLogoutButton);
+    if (api.disableLogoutButton) {
+      alert("Can't perform logout");
+      return;
+    }
     // const res = await logout_Api_Call();
     const rId = localStorage.getItem("%su!I#d");
     const uId = localStorage.getItem("%ru!I#d");
@@ -22,9 +29,26 @@ const Navbar = () => {
     }
     localStorage.removeItem("%su!I#d");
     localStorage.removeItem("%ru!I#d");
-    // history.replace("/");
+    history.replace(HOME_ROUTE);
     // authApi.authenticated(false);
   };
+
+  useEffect(()=>{
+    if (api.networkError) {
+      if (localStorage.getItem('store')) {
+        if (!api.disableLogoutButton) {
+          api.handleLogoutVisibility('DISABLE', true);
+        }
+      } else {
+        if (!api.removeLogoutButton) {
+          api.handleLogoutVisibility('REMOVE', true);
+        }
+      }
+    }
+    if (api.isUserLoggedIn === false && !api.removeLogoutButton) {
+        api.handleLogoutVisibility('REMOVE', true);
+    }
+  }, []);
   return (
     <nav className={`${n.nav} bg-stone-900 text-stone-200`}>
       <ul className={n.ul}>
@@ -50,15 +74,18 @@ const Navbar = () => {
             api={api}
           />
         </Suspense>
-        <a
-          href={HOME_ROUTE}
+        {
+          api.removeLogoutButton ? (<></>) : (
+          <Link
           className={
             n.signoutbutton +
             " btn btn-sm text-red-600 hover:text-white hover:bg-red-700 "
           }
           onClick={handler}>
           Logout
-        </a>
+        </Link>
+        )
+        }
       </ul>
     </nav>
   );
