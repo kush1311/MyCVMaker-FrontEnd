@@ -15,10 +15,11 @@ import clone from "just-clone";
 import { AuthContext } from "./../ProtectedRoutes/AuthenticationApi";
 import { getAllResumes } from "../ProtectedRoutes/ProtectedRoute";
 import { Redirect } from "react-router-dom";
-import { getResume, getResumeData, message } from "../../utils/apiCalls";
+import { getResume, getResumeData, message, verifyTokenApiCall } from "../../utils/apiCalls";
 import { Helmet } from "react-helmet";
 import PleaseLoginModal from "../Modals/PleaseLoginModal";
 import { LOGIN_ROUTE } from "../../constants/routes";
+import { Loader } from "../../constants/Loader";
 // const PDFViewer = lazy(() => import("./PDFViewer/PDFViewer"));
 
 // TODO: Lazy loading of HiddenPdf could be solution for slow rendring
@@ -288,6 +289,30 @@ export default class PdfMaker extends Component {
       }, 800);
     }
   };
+  verifyTokenHandler = async () => {
+    try {
+      const result = await verifyTokenApiCall();
+      if (result && result.status && result.status === 200) {
+        this.context.handleIsUserLoggedIn(true);
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (error.response && error.response.status === 401 && error.response.data && error.response.data.message) {
+        const { message } =error.response.data;
+        if (message === 'TOKEN_NOT_PRESENT' || message === 'UNAUTHORIZED') {
+          this.context.handleIsUserLoggedIn(false);
+        }
+      } else if (message === 'TOKEN_NOT_PRESENT') {
+          this.context.handleIsUserLoggedIn(true);
+      } else if (error.message === 'Network Error') {
+        this.context.handleNetworkError(true);
+      } else {
+        console.log(error.message);
+        alert('Something went wrong');
+      }
+
+    }
+  }
   componentDidMount() {
     //console.log(this.context.state.editor);
     this.setHeader();
@@ -296,13 +321,20 @@ export default class PdfMaker extends Component {
       // //console.log("object");
       this.onL();
     }, 800);
+    this.verifyTokenHandler();
+  }
+  shallGivePleaseLoginModal () {
+    return !this.context.networkError && this.context.isUserLoggedIn !== null && !this.context.pleaseLoginModalShowed && !this.context.isUserLoggedIn;
   }
   render() {
     const rId = localStorage.getItem("%ru!I#d");
     const userId = localStorage.getItem("%su!I#d");
-    if (!this.state.isAuth) {
-      return <Redirect to={LOGIN_ROUTE} />;
+    console.log('this.context.isUserLoggedIn ---> ', this.context.isUserLoggedIn);
+
+    if (this.context.networkError !== true && (this.context.isUserLoggedIn === null || this.context.isUserLoggedIn === undefined)) {
+      return <Loader color='text-black' size='spinner-border-lg' />;
     }
+
     if (!this.context.cv && userId && rId) {
       this.callCVData();
     }
@@ -315,7 +347,10 @@ export default class PdfMaker extends Component {
         return <Redirect to={LOGIN_ROUTE} />;
       }
     }
-console.log('this.context.state.pleaseLoginModalShowed', this.context.state.pleaseLoginModalShowed);
+    console.log('--------------------- this.context.state.pleaseLoginModalShowed ---------------------', this.context.state.pleaseLoginModalShowed);
+    console.log(this.context.state.pleaseLoginModalShowed && !this.context.isUserLoggedIn);
+    console.log('this.context.networkError', this.context.networkError);
+    console.log('To show modal condition', this.context.networkError,this.context.networkError && this.context.isUserLoggedIn !== null && !this.context.state.pleaseLoginModalShowed && this.context.isUserLoggedIn);
     return (
       <>
         {this.context.state.fullscreen ? (
@@ -324,7 +359,7 @@ console.log('this.context.state.pleaseLoginModalShowed', this.context.state.plea
           <></>
         )}
         {
-          this.context.state.pleaseLoginModalShowed ? (<></>) : (<PleaseLoginModal/>)
+          this.shallGivePleaseLoginModal() ? (<PleaseLoginModal/>) : (<></>)
         }
         
         <div className={`${pmaker.layout} fluid-container`}>
