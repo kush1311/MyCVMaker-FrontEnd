@@ -240,6 +240,11 @@ class GlobalContextApi extends Component {
     headerCustomFieldLayout: 2,
     headingLayout: 9,
     pleaseLoginModalShowed: false,
+    isUserLoggedIn: null,
+    networkError: false,
+    disableSaveButton: false,
+    disableLogoutButton: false,
+    removeLogoutButton: false,
     // Too help with updated and non updated databases differentiation
     version: 0,
   };
@@ -667,6 +672,32 @@ class GlobalContextApi extends Component {
       pleaseLoginModalShowed: booleanValue,
     })
   }
+  handleIsUserLoggedIn = (booleanValue) => {
+    this.setState({
+      isUserLoggedIn: booleanValue,
+    })
+  }
+  handleNetworkError = (booleanValue) => {
+    this.setState({
+      networkError: booleanValue,
+    })
+  }
+  handleSaveButtonVisibility = (booleanValue) => {
+    this.setState({
+      disableSaveButton: booleanValue,
+    })
+  }
+  handleLogoutVisibility = (action, booleanValue) => {
+    if (action === 'DISABLE') {
+      this.setState({
+        disableLogoutButton: booleanValue,
+      })
+    } else {
+      this.setState({
+        removeLogoutButton: booleanValue,
+      })
+    }
+  }
   componentDidMount() {
     if (this.state.cv && this.state.cv[0]) {
       this.setEditor(true, "headerComponent", this.state.cv[0].data, "header");
@@ -681,6 +712,12 @@ class GlobalContextApi extends Component {
           styles: this.state.styles,
           cv: this.state.cv,
           componentId: this.state.componentId,
+          isUserLoggedIn: this.state.isUserLoggedIn,
+          networkError: this.state.networkError,
+          pleaseLoginModalShowed: this.state.pleaseLoginModalShowed,
+          disableSaveButton: this.state.disableSaveButton,
+          disableLogoutButton: this.state.disableLogoutButton,
+          removeLogoutButton: this.state.removeLogoutButton,
           setHeadingLayout: this.setHeadingLayout,
           skillsStyleHandler: this.skillsStyleHandler,
           setFooter: this.setFooter,
@@ -730,6 +767,10 @@ class GlobalContextApi extends Component {
           styleHandler: this.styleHandler,
           skillsHideHandler: this.skillsHideHandler,
           handlePleaseLoginModalShowed: this.handlePleaseLoginModalShowed,
+          handleIsUserLoggedIn: this.handleIsUserLoggedIn,
+          handleNetworkError: this.handleNetworkError,
+          handleSaveButtonVisibility: this.handleSaveButtonVisibility,
+          handleLogoutVisibility: this.handleLogoutVisibility,
         }}>
         {this.props.children}
       </Provider>
