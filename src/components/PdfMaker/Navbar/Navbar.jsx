@@ -7,6 +7,8 @@ import { ArrowsExpandIcon } from "@heroicons/react/outline";
 import { logoutApiCall } from "../../../utils/apiCalls";
 import { HOME_ROUTE } from "../../../constants/routes";
 import { useEffect } from "react";
+import { NavbarHomeIcon } from "../../Home/homePageMiniComponents/NavbarHomeIcon";
+
 const Down = React.lazy(() => import("../HiddenPdf/Down/Down"));
 
 const Navbar = () => {
@@ -50,9 +52,7 @@ const Navbar = () => {
   return (
     <nav className={`${n.nav} bg-stone-900 text-stone-200`}>
       <ul className={n.ul}>
-        {/* <button className={n.buttons + " btn btn-sm"} onClick={goToHome}>
-          Home
-        </button> */}
+      <NavbarHomeIcon/>
         <button
           className={n.buttons + " btn btn-sm hover:text-white"}
           onClick={api.toggleFullscreen}>
