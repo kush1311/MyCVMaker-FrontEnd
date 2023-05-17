@@ -13,12 +13,16 @@ import axios from "axios";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 import AuthenticationApi from "./components/ProtectedRoutes/AuthenticationApi";
 import { FEEDBACK_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESUME_BUILDER_ROUTE } from "./constants/routes";
+import logController from "./utils/logController";
 // import PdfMaker from "./components/PdfMaker/PdfMaker";
 const PdfMaker = React.lazy(() => import("./components/PdfMaker/PdfMaker"));
 const Loading = () => {
   return <div className='h-screen text-center'> Loading...... </div>;
 };
 axios.defaults.withCredentials = true;
+
+logController();
+
 export default class App extends Component {
   render() {
     return (
