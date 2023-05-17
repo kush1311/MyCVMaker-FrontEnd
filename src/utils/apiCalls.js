@@ -134,6 +134,30 @@ const saveResumeData = async (userId, resumeId, body) => {
     }
 }
 
+const uploadImageApiCall = async (formData, userId, resumeId) => {
+    try {
+        const result = await axios
+        .put(`${API_URL.USER_BASE_URL}/${encrypt(userId)}/resume/${encrypt(resumeId)}/image/`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const deleteImageApiCall = async (userId, resumeId) => {
+    try {
+        const result = await axios
+        .delete(`${API_URL.USER_BASE_URL}/${encrypt(userId)}/resume/${encrypt(resumeId)}/image/`)
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 const logoutApiCall = async () => {
     return await axios.get(`${API_URL.USER_BASE_URL}/logout`)
 }
@@ -148,4 +172,6 @@ export {
     verifyTokenApiCall,
     saveResumeData,
     getResumeTemplateData,
+    uploadImageApiCall,
+    deleteImageApiCall
 }
