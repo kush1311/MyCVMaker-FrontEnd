@@ -63,7 +63,12 @@ const Login = () => {
     setLoading(false);
   };
 
+  function removePleaseLoginModalShowedFromLocalStorage() {
+    localStorage.removeItem('pleaseloginmodalshowed');
+  }
+
   if (mainContext.userId && mainContext.resumeIdArray.length && mainContext.currentResumeId) {
+    removePleaseLoginModalShowedFromLocalStorage();
     gotoResumeBuilderPage();
   }
 
