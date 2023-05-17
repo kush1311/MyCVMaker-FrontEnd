@@ -1,6 +1,7 @@
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
+import logController from './logController';
 
-console.log(process.env);
+logController()
 
 const PRIVATE_KEY = process.env.REACT_APP_CRYPTO_PRIVATE_KEY;
 console.log('PRIVATE_KEY --> ', PRIVATE_KEY);
@@ -16,7 +17,7 @@ function decrypt(encryptedData) {
   return bytes.toString(CryptoJS.enc.Utf8);
 }
 
-module.exports = {
+export {
   encrypt,
   decrypt,
 };
