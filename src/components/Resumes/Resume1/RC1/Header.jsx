@@ -190,6 +190,7 @@ const Image = ({ api, src, setCVImage }) => {
   const uploadHandler = async (e) => {
     if (api.userId === null) {
       alert('Login to upload image');
+      return;
     }
     setUploading(true);
     const data = e.target.files[0];
