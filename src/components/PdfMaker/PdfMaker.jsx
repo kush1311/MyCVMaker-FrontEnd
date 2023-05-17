@@ -15,7 +15,7 @@ import clone from "just-clone";
 import { AuthContext } from "./../ProtectedRoutes/AuthenticationApi";
 import { getAllResumes } from "../ProtectedRoutes/ProtectedRoute";
 import { Redirect } from "react-router-dom";
-import { getResume, getResumeData, message, verifyTokenApiCall } from "../../utils/apiCalls";
+import { getResume, getResumeData, getResumeTemplateData, message, verifyTokenApiCall } from "../../utils/apiCalls";
 import { Helmet } from "react-helmet";
 import PleaseLoginModal from "../Modals/PleaseLoginModal";
 import { LOGIN_ROUTE } from "../../constants/routes";
@@ -40,6 +40,7 @@ export default class PdfMaker extends Component {
     headerListItemConfig: "",
     version: "",
     isAuth: true,
+    userId: null,
   };
   componentDidUpdate() {
     if (
@@ -50,6 +51,9 @@ export default class PdfMaker extends Component {
       this.setState({
         src: document.getElementById("Thisisid").src,
       });
+    }
+    if (this.state.userId === null && this.context.userId !== null && this.context.currentResumeId !== null) {
+      this.handleCheckStoreAvailibilityInLocalStorage();
     }
   }
 
@@ -260,21 +264,7 @@ export default class PdfMaker extends Component {
     };
     localStorage.setItem("store", JSON.stringify(obj));
   };
-  callCVData = async () => {
-    const res = await getResumeData();
-    if (!res) {
-      alert("Server Down");
-    } else if (res === message.logout) {
-      this.setState({
-        isAuth: false,
-      });
-    } else if (res === message.server_error) {
-      alert("Server Down");
-    } else {
-      //console.log(res);
-      this.context.updateCV(res);
-    }
-  };
+
   setHeader = () => {
     if (this.context.state.cv && this.context.state.cv[0]) {
       this.context.setEditor(
@@ -289,11 +279,33 @@ export default class PdfMaker extends Component {
       }, 800);
     }
   };
+
+  setResumeDataInContextAndLocalStorage (data) {
+    this.setStoreInLocalStorage(data, this.context.currentResumeId);
+    this.setStoreInContext(data);
+  };
+
+  handleSettingResumeDataTemplateForNotLoggedInUser = async () => {
+    if (!this.getStoreFromLocalStorage()) {
+      const templateData = await getResumeTemplateData();
+      this.setResumeDataInContextAndLocalStorage(templateData.data);
+    } else {
+      this.setResumeDataInContextAndLocalStorage(this.getStoreFromLocalStorage());
+    }
+  };
+
   verifyTokenHandler = async () => {
     try {
       const result = await verifyTokenApiCall();
       if (result && result.status && result.status === 200) {
         this.context.handleIsUserLoggedIn(true);
+        this.context.handleSetUserId(result.userId);
+        this.context.handleSetResumeIdArray([...result.resumeIdArray]);
+        this.context.handleSetCurrentResumeId(result.resumeIdArray[0]);
+      } else {
+        console.log('Unexpected result came from handleIsUserLoggedIn()')
+        console.log(result);
+        alert("Something went wrong")
       }
     } catch (error) {
       console.log(error.response);
@@ -301,6 +313,7 @@ export default class PdfMaker extends Component {
         const { message } =error.response.data;
         if (message === 'TOKEN_NOT_PRESENT' || message === 'UNAUTHORIZED') {
           this.context.handleIsUserLoggedIn(false);
+          await this.handleSettingResumeDataTemplateForNotLoggedInUser();
         }
       } else if (message === 'TOKEN_NOT_PRESENT') {
           this.context.handleIsUserLoggedIn(true);
@@ -308,10 +321,79 @@ export default class PdfMaker extends Component {
         this.context.handleNetworkError(true);
       } else {
         console.log(error.message);
-        alert('Something went wrong');
+        alert(`Something went wrong ${error.message}`);
       }
 
     }
+  }
+  getStoreFromLocalStorage () {
+    return JSON.parse(localStorage.getItem('store'));
+  }
+  setStoreInLocalStorage(data, currentResumeId) {
+    const newData = { ...data };
+    newData.currentResumeId = currentResumeId || "NOT_LOGGED_IN";
+    localStorage.setItem('store', JSON.stringify(newData));
+  }
+  setStoreInContext(data) {
+    this.context.updateCV(data);
+  }
+  handleSetResumeData = async () => {
+    if (!this.context.userId || !this.context.currentResumeId) {
+      alert("Cannot get your resume");
+      return;
+    }
+    try {
+      const result = await getResumeData(this.context.userId, this.context.currentResumeId);
+      if (result && result.data && result.status && result.status === 200) {
+        console.log('***************************************');
+        console.log(result.data[0]);
+        console.log('***************************************');
+        this.setResumeDataInContextAndLocalStorage(result.data[0])
+        // TODO: SHOW loader until this processes completes
+      } else {
+        console.log("Can't find resume")
+      }
+    } catch (error) {
+      console.log(error);
+      alert(`Something went wrong ${error.message}`);
+    }
+  }
+  deleteStoreFromLocalStorage () {
+    localStorage.removeItem('store');
+  }
+  handleAvailableStoreData () {
+    const data = this.getStoreFromLocalStorage();
+    if (data.currentResumeId) {
+      if (!this.context.resumeIdArray.includes(data.currentResumeId) && data.currentResumeId !== "NOT_LOGGED_IN") {
+        this.deleteStoreFromLocalStorage();
+        this.handleSetResumeData();
+      } else if (data.currentResumeId === "NOT_LOGGED_IN" || this.context.resumeIdArray.includes(data.currentResumeId)) {
+        if ("userWantThisLocalChanges") {
+          /* TODO:
+          Retrieve resume data and check is there any difference. 
+          If yes then Ask user, changes is wanted or not
+          */
+          this.deleteStoreFromLocalStorage();
+          this.handleSetResumeData();
+        } else {
+          this.deleteStoreFromLocalStorage();
+          this.handleSetResumeData();
+        }
+      }
+    } else {
+      this.deleteStoreFromLocalStorage();
+      this.handleSetResumeData();
+    }
+  }
+  handleCheckStoreAvailibilityInLocalStorage = async () => {
+    if (this.getStoreFromLocalStorage()) {
+      this.handleAvailableStoreData();
+    } else {
+      this.handleSetResumeData();
+    }
+    this.setState({
+      userId: this.context.userId,
+    })
   }
   componentDidMount() {
     //console.log(this.context.state.editor);
@@ -326,31 +408,43 @@ export default class PdfMaker extends Component {
   shallGivePleaseLoginModal () {
     return !this.context.networkError && this.context.isUserLoggedIn !== null && !this.context.pleaseLoginModalShowed && !this.context.isUserLoggedIn;
   }
+  updateStoreInLocalStorage () {
+    if (this.context.cv && this.context.currentResumeId) {      
+    const bodyData = {
+      cv: this.context.cv,
+      styles: this.context.styles,
+      rows: this.context.state.rows,
+      footer: this.context.state.footer,
+      imageConfig: this.context.state.imageConfig,
+      headerListItemConfig: this.context.state.headerListItemConfig,
+      skillsItemConfig: this.context.state.skillsItemConfig,
+      headerLayout: this.context.state.headerLayout,
+      headerCustomFieldLayout: this.context.state.headerCustomFieldLayout,
+      headingLayout: this.context.state.headingLayout,
+      version: this.context.state.version,
+  }
+  this.setStoreInLocalStorage(bodyData, this.context.currentResumeId);
+  }
+}
   render() {
-    const rId = localStorage.getItem("%ru!I#d");
-    const userId = localStorage.getItem("%su!I#d");
     console.log('this.context.isUserLoggedIn ---> ', this.context.isUserLoggedIn);
 
-    if (this.context.networkError !== true && (this.context.isUserLoggedIn === null || this.context.isUserLoggedIn === undefined)) {
+    if (!this.context.cv && this.context.networkError !== true && (this.context.isUserLoggedIn === null || this.context.isUserLoggedIn === undefined)) {
       return <Loader color='text-black' size='spinner-border-lg' />;
     }
 
-    if (!this.context.cv && userId && rId) {
-      this.callCVData();
+    console.log('this.state.userId --> before checking CV is in context', this.state.userId);
+    if (!this.context.cv) {
+      return <Loader color='text-black' size='spinner-border-lg' />;
     }
-    if (!userId && !rId && !this.context.cv) {
-      if (!this.context.cv && localStorage.getItem("store")) {
-        this.set_CV_From_LocalStorage();
-      } else if (!localStorage.getItem("store")) {
-        this.set_LocalStorage();
-      } else {
-        return <Redirect to={LOGIN_ROUTE} />;
-      }
-    }
+    // this.updateStoreInLocalStorage()
     console.log('--------------------- this.context.state.pleaseLoginModalShowed ---------------------', this.context.state.pleaseLoginModalShowed);
     console.log(this.context.state.pleaseLoginModalShowed && !this.context.isUserLoggedIn);
     console.log('this.context.networkError', this.context.networkError);
     console.log('To show modal condition', this.context.networkError,this.context.networkError && this.context.isUserLoggedIn !== null && !this.context.state.pleaseLoginModalShowed && this.context.isUserLoggedIn);
+    console.log('-------------- CV -----------');
+    console.log('this.context.cv BOOLEAN--> ', Boolean(this.context.cv));
+    console.log(this.context.cv);
     return (
       <>
         {this.context.state.fullscreen ? (
