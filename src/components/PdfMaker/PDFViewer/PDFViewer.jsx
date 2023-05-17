@@ -14,6 +14,10 @@ import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import PDFViewPageNevigation from "./subComponents/PDFViewPageNevigation";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+const PdfLoading = () => {
+  return <h1>Loading...</h1>
+};
+
 const PDFViewer = (props) => {
   var w = window.innerWidth;
   const [width, height] = useWindowSize();
@@ -45,7 +49,7 @@ const PDFViewer = (props) => {
     <>
       <PDFViewPageNevigation setPageNumberHandler={setPageNumberHandler} pageNumber={pageNumber} totalPages={totalPages} api={api} />
       <div className='my-auto p-0 d-flex justify-content-center mx-auto'>
-        <PDFViewerDocument renderMode='canvas' onLoadSuccess={onLoadSuccess} file={props.src}>
+        <PDFViewerDocument renderMode='canvas' error={<PdfLoading/>} noData={<PdfLoading/>} loading={()=><PdfLoading/>} onLoadSuccess={onLoadSuccess} file={props.src}>
           {/* <Doc renderMode='svg' onLoadSuccess={onLoadSuccess} file={pdfFile}> */}
           <PDFViewerPage
             height={api.state.fullscreen ? height * 1.5 : height1}
