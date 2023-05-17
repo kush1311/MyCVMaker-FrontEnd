@@ -37,8 +37,8 @@ export default class App extends Component {
                   <Route path={HOME_ROUTE} exact component={Home} />
                   <Suspense fallback={<FullPageLoader />}>
                     <Route exact path={RESUME_BUILDER_ROUTE} component={PdfMaker} />
+                    <Route exact path="*" component={NotFound} />
                   </Suspense>
-                  <Route component={NotFound} />
                 </Switch>
               </AuthenticationApi>
             </GlobalContextApi>
