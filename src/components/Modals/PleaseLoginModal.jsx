@@ -10,11 +10,16 @@ function PleaseLoginModal() {
   const history = useHistory();
   const globalState = useContext(Context);
   const handleClose = () => setShow(false);
+  function savePleaseLoginModalShowedInLocalStorage () {
+    localStorage.setItem('pleaseloginmodalshowed', 'yes');
+  }
   const goToLoginPage = () => {
+    savePleaseLoginModalShowedInLocalStorage();
     history.push(LOGIN_ROUTE);
   }
   const handleLoginLater = () => {
     setShow(false);
+    savePleaseLoginModalShowedInLocalStorage();
     globalState.handlePleaseLoginModalShowed(true);
   }
   return (
