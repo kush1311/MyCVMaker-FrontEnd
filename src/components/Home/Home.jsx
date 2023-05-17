@@ -5,7 +5,6 @@ import Typewriter from "typewriter-effect";
 import {
   ChevronDoubleRightIcon,
 } from "@heroicons/react/solid";
-// import { AnnotationIcon, ChevronDoubleRightIcon, HomeIcon } from "@heroicons/react/outline";
 import image from "../../Resume Image/R1.png";
 import { Helmet } from "react-helmet";
 import { RESUME_BUILDER_ROUTE } from "../../constants/routes"
@@ -17,6 +16,17 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  function isSafari() {
+    const userAgent = navigator.userAgent;
+    console.log('User agent');
+    console.log(userAgent);
+    // return false;
+    return userAgent.includes('Safari') && !userAgent.includes('Chrome') && !userAgent.includes('Firefox');
+  }
+  if (isSafari() && localStorage.getItem('Shownwarningtosafariuser') !== 'yes') {
+    alert(`Hey, Good to see you.\n\nUse chrome or firefox for better experience`);
+    localStorage.setItem('Shownwarningtosafariuser', 'yes');
+  }
   return (
     <>
       <Helmet>
