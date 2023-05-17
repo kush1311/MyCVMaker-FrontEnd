@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Footer, NavBar } from "../Home/Home";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { HOME_ROUTE } from "../../constants/routes";
+import { HomePageNavbar } from "../Home/homePageMiniComponents/HomePageNavbar";
+import { Footer } from "../Home/homePageMiniComponents/Footer";
 
 const Feedback = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const Feedback = () => {
   //console.log(email, feedback);
   return (
     <div>
-      <NavBar />
+      <HomePageNavbar />
       <div className='text-center'>
         <span className='mx-auto text-2xl pr-4'>Feedback</span>
       </div>

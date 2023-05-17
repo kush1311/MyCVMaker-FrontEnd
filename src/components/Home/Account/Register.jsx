@@ -2,11 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Loader } from "../../../constants/Loader";
-import { Footer, NavBar } from "../Home";
 import r from "./Register.module.css";
 import { Helmet } from "react-helmet";
 import { registerApiCall } from "../../../utils/apiCalls";
 import { LOGIN_ROUTE } from "../../../constants/routes";
+import { HomePageNavbar } from "../homePageMiniComponents/HomePageNavbar";
+import { Footer } from "../homePageMiniComponents/Footer";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +28,6 @@ const Register = () => {
       return;
     }
     try {
-      console.log('Inside try');
       const res = await registerApiCall({
         email, password, firstName, lastName
       });
@@ -60,7 +60,7 @@ const Register = () => {
           content='Create account to build resumes for free.'
         />
       </Helmet>
-      <NavBar />
+      <HomePageNavbar />
       <div
         className={
           "fluid-container w-10/12 sm:w-8/12 md:w-6/12 py-3 px-3 mx-auto my-3 bg-white shadow-inner shadow-black outline outline-blue-500"
