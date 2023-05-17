@@ -19,7 +19,7 @@ import { getResume, getResumeData, getResumeTemplateData, message, verifyTokenAp
 import { Helmet } from "react-helmet";
 import PleaseLoginModal from "../Modals/PleaseLoginModal";
 import { LOGIN_ROUTE } from "../../constants/routes";
-import { Loader } from "../AllLoaders/Loaders";
+import { FullPageLoader } from "../AllLoaders/Loaders";
 // const PDFViewer = lazy(() => import("./PDFViewer/PDFViewer"));
 
 // TODO: Lazy loading of HiddenPdf could be solution for slow rendring
@@ -255,12 +255,12 @@ export default class PdfMaker extends Component {
     console.log('this.context.isUserLoggedIn ---> ', this.context.isUserLoggedIn);
 
     if (!this.context.cv && this.context.networkError !== true && (this.context.isUserLoggedIn === null || this.context.isUserLoggedIn === undefined)) {
-      return <Loader color='text-black' size='spinner-border-lg' />;
+      return <FullPageLoader />;
     }
 
     console.log('this.state.userId --> before checking CV is in context', this.state.userId);
     if (!this.context.cv) {
-      return <Loader color='text-black' size='spinner-border-lg' />;
+      return <FullPageLoader />;
     }
     // this.updateStoreInLocalStorage()
     console.log('--------------------- this.context.state.pleaseLoginModalShowed ---------------------', this.context.state.pleaseLoginModalShowed);
