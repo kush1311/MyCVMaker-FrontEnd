@@ -245,6 +245,9 @@ class GlobalContextApi extends Component {
     disableSaveButton: false,
     disableLogoutButton: false,
     removeLogoutButton: false,
+    userId: null,
+    resumeIdArray: [],
+    currentResumeId: null,
     // Too help with updated and non updated databases differentiation
     version: 0,
   };
@@ -698,6 +701,21 @@ class GlobalContextApi extends Component {
       })
     }
   }
+  handleSetUserId = (userId) => {
+    this.setState({
+      userId: userId,
+    })
+  }
+  handleSetResumeIdArray = (resumeIdArray) => {
+    this.setState({
+      resumeIdArray: resumeIdArray,
+    })
+  }
+  handleSetCurrentResumeId = (currentResumeId) => {
+  this.setState({
+    currentResumeId: currentResumeId,
+  })
+}
   componentDidMount() {
     if (this.state.cv && this.state.cv[0]) {
       this.setEditor(true, "headerComponent", this.state.cv[0].data, "header");
@@ -718,6 +736,9 @@ class GlobalContextApi extends Component {
           disableSaveButton: this.state.disableSaveButton,
           disableLogoutButton: this.state.disableLogoutButton,
           removeLogoutButton: this.state.removeLogoutButton,
+          userId: this.state.userId,
+          resumeIdArray: this.state.resumeIdArray,
+          currentResumeId: this.state.currentResumeId,
           setHeadingLayout: this.setHeadingLayout,
           skillsStyleHandler: this.skillsStyleHandler,
           setFooter: this.setFooter,
@@ -771,6 +792,9 @@ class GlobalContextApi extends Component {
           handleNetworkError: this.handleNetworkError,
           handleSaveButtonVisibility: this.handleSaveButtonVisibility,
           handleLogoutVisibility: this.handleLogoutVisibility,
+          handleSetUserId: this.handleSetUserId,
+          handleSetResumeIdArray: this.handleSetResumeIdArray,
+          handleSetCurrentResumeId: this.handleSetCurrentResumeId,
         }}>
         {this.props.children}
       </Provider>
