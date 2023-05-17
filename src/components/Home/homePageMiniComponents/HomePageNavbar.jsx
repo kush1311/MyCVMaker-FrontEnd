@@ -4,7 +4,7 @@ import {
     UserAddIcon,
     UserCircleIcon as UserIcon,
   } from "@heroicons/react/solid";
-import { NavbarHomeIcon } from "./HomeIcon";
+import { NavbarHomeIcon } from "./NavbarHomeIcon";
 
 export const HomePageNavbar = () => {
     const NavButtonClass =
