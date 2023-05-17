@@ -25,21 +25,22 @@ function PleaseLoginModal() {
   return (
     <>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>You are not logged in</Modal.Title>
+        <Modal.Header className='bg-sky-600' closeButton>
+          <Modal.Title className='text-white'>You are not logged in</Modal.Title>
         </Modal.Header>
         <Modal.Body>Login to save your changes</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={goToLoginPage}>
+          <Button variant="secondary" className='bg-green-600 hover:bg-green-700' onClick={goToLoginPage}>
             Take me to login page
           </Button>
-          <Button variant="primary" onClick={handleLoginLater}>
+          <Button variant="primary" className='bg-cyan-600 hover:bg-cyan-700' onClick={handleLoginLater}>
             I will do it later
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
+
 }
 
 export default PleaseLoginModal;
