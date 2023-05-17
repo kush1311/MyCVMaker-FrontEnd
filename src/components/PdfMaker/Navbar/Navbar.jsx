@@ -3,34 +3,32 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import n from "./Navbar.module.css";
-import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { ArrowsExpandIcon } from "@heroicons/react/outline";
-import { logout_Api_Call } from "../../../utils/apiCalls";
+import { logoutApiCall } from "../../../utils/apiCalls";
 import { HOME_ROUTE } from "../../../constants/routes";
 import { useEffect } from "react";
 const Down = React.lazy(() => import("../HiddenPdf/Down/Down"));
 
 const Navbar = () => {
   const api = useContext(Context);
-  const authApi = useContext(AuthContext);
   const history = useHistory();
-  const handler = async () => {
+
+  const handleLogout = async () => {
     console.log('api.disableLogoutButton');
     console.log(api.disableLogoutButton);
     if (api.disableLogoutButton) {
       alert("Can't perform logout");
       return;
     }
-    // const res = await logout_Api_Call();
-    const rId = localStorage.getItem("%su!I#d");
-    const uId = localStorage.getItem("%ru!I#d");
-    if (localStorage.getItem("store") && !rId && !uId) {
+    try {
+      await logoutApiCall();
       localStorage.removeItem("store");
+      history.replace(HOME_ROUTE);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong, can't log you out")
     }
-    localStorage.removeItem("%su!I#d");
-    localStorage.removeItem("%ru!I#d");
-    history.replace(HOME_ROUTE);
-    // authApi.authenticated(false);
   };
 
   useEffect(()=>{
@@ -81,7 +79,7 @@ const Navbar = () => {
             n.signoutbutton +
             " btn btn-sm text-red-600 hover:text-white hover:bg-red-700 "
           }
-          onClick={handler}>
+          onClick={handleLogout}>
           Logout
         </Link>
         )
