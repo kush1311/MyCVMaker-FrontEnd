@@ -24,6 +24,7 @@ import {
   hideSpan,
 } from "../../../../constants/styles";
 import { Loader } from "../../../AllLoaders/Loaders";
+import { deleteImageApiCall, uploadImageApiCall } from "../../../../utils/apiCalls";
 
 export const Header = (props) => {
   const api = useContext(Context);
@@ -165,75 +166,55 @@ const Image = ({ api, src, setCVImage }) => {
   const hideHandler = () => {
     api.imageHideHandler();
   };
-  const deleteHandler = () => {
+  const deleteHandler = async () => {
     // TODO:   Alert !!!!!
     setDeleting(true);
-    axios
-      .post(`${process.env.REACT_APP_URL}/image/delete`, {
-        userId: localStorage.getItem("%su!I#d"),
-        resumeId: localStorage.getItem("%ru!I#d"),
-      })
-      .then((res) => {
-        setDeleting(false);
-
-        //console.log(res);
-        if (res && res.status === 200) {
-          api.setImageURL("");
-        }
-      })
-      .catch((err) => {
-        setDeleting(false);
-
-        //console.log(err);
+    try {
+      const res = await deleteImageApiCall(api.userId, api.currentResumeId)
+      if (res && res.status === 200) {
+        api.setImageURL("");
+      }
+    } catch (err) {
         if (
           err &&
           err.response &&
           err.response.status &&
           err.response.status === 500 &&
           err.response.message
-        )
+        ){
           alert(err.response.message);
-      });
+      };  
+    }
+    setDeleting(false);
   };
   const uploadHandler = async (e) => {
-    const uId = localStorage.getItem("%su!I#d");
-    if (!uId) {
-      alert("Not Logged In");
-      return;
+    if (api.userId === null) {
+      alert('Login to upload image');
     }
-
     setUploading(true);
     const data = e.target.files[0];
     //console.log(data);
     const formData = new FormData();
     formData.append("image", data);
     formData.append("upload_preset", "f7nqftjh");
-    formData.append("resumeId", localStorage.getItem("%ru!I#d"));
-    formData.append("userId", localStorage.getItem("%su!I#d"));
     // https://api.cloudinary.com/v1_1/dzre1jnob/image/upload
-    await axios
-      .post(`${process.env.REACT_APP_URL}/image/`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => {
-        setUploading(false);
-        //console.log(res);
-        if (res && res.status === 201 && res.data && res.data.URL) {
-          api.setImageURL(res.data.URL);
-        }
-      })
-      .catch((err) => {
-        setUploading(false);
-        //console.log(err);
-        if (
-          err &&
-          err.response &&
-          err.response.status &&
-          err.response.status === 500 &&
-          err.response.message
-        )
-          alert(err.response.message);
-      });
+    try {
+      const res = await uploadImageApiCall(formData, api.userId, api.currentResumeId);
+      if (res && res.status === 201 && res.data && res.data.URL) {
+        api.setImageURL(res.data.URL);
+      }
+    } catch (err) {
+      if (
+        err &&
+        err.response &&
+        err.response.status &&
+        err.response.status === 500 &&
+        err.response.message
+      ){
+        alert(err.response.message);
+    };
+    }
+    setUploading(false);
   };
 
   return (
