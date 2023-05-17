@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Loader } from "../../../constants/Loader";
 import r from "./Register.module.css";
 import { Helmet } from "react-helmet";
 import { registerApiCall } from "../../../utils/apiCalls";
 import { LOGIN_ROUTE } from "../../../constants/routes";
 import { HomePageNavbar } from "../homePageMiniComponents/HomePageNavbar";
 import { Footer } from "../homePageMiniComponents/Footer";
+import { Loader } from "../../AllLoaders/Loaders";
 
 const Register = () => {
   const [email, setEmail] = useState("");

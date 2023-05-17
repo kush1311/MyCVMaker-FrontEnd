@@ -5,12 +5,12 @@ import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import r from "./Register.module.css";
 import { createResumeApiCall } from "../../../utils/apiCalls";
-import { Loader } from "../../../constants/Loader";
 import { Helmet } from "react-helmet";
 import { loginApiCall } from "../../../utils/apiCalls"
 import { RESUME_BUILDER_ROUTE } from "../../../constants/routes";
 import { HomePageNavbar } from "../homePageMiniComponents/HomePageNavbar";
 import { Footer } from "../homePageMiniComponents/Footer";
+import { Loader } from "../../AllLoaders/Loaders";
 const Login = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -137,7 +137,7 @@ const Login = () => {
                 style={{ textDecorationLine: "none" }}
                 className='hover:cursor-pointer mx-auto py-2 text-white bg-blue-600 hover:bg-blue-700 px-8 sm:px-20 font-bold hover:px-28 duration-300 ease-in-out delay-150 rounded'
                 onClick={loginButtonClickHandler}>
-                {loading ? <Loader /> : "Login"}
+                {loading ? <Loader/> : "Login"}
               </span>
             </div>
           </form>
