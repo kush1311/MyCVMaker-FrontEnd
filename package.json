@@ -19,6 +19,9 @@
     "react-scripts": "4.0.3",
     "typewriter-effect": "^2.18.2"
   },
+  "engines": {
+    "node": "16.20.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build:production": "GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false REACT_APP_ENV=production react-scripts build",
