@@ -12,10 +12,11 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "./PDFViewer.css";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import PDFViewPageNevigation from "./subComponents/PDFViewPageNevigation";
+import { Loader } from "../../AllLoaders/Loaders";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PdfLoading = () => {
-  return <h1>Loading...</h1>
+  return <Loader color='text-sky-600 mt-12' size='3' />
 };
 
 const PDFViewer = (props) => {
