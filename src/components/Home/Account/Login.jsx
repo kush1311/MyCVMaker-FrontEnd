@@ -2,42 +2,53 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../../ProtectedRoutes/AuthenticationApi";
-import { Footer, NavBar } from "../Home";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 import r from "./Register.module.css";
-import { createResumeApiCall, getResumeData } from "../../../utils/apiCalls";
+import { createResumeApiCall } from "../../../utils/apiCalls";
 import { Loader } from "../../../constants/Loader";
 import { Helmet } from "react-helmet";
 import { loginApiCall } from "../../../utils/apiCalls"
 import { RESUME_BUILDER_ROUTE } from "../../../constants/routes";
-// axios.defaults.withCredentials = true;
+import { HomePageNavbar } from "../homePageMiniComponents/HomePageNavbar";
+import { Footer } from "../homePageMiniComponents/Footer";
 const Login = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const mainContext = useContext(Context);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const gotoResumeBuilderPage = () => {
+    history.push(RESUME_BUILDER_ROUTE);
+  };
+  const setUserDataInTheContext = (userId, resumeIdArray, currentResumeId) => {
+    mainContext.handleSetUserId(userId);
+    mainContext.handleSetResumeIdArray([...resumeIdArray]);
+    mainContext.handleSetCurrentResumeId(currentResumeId);
+  };
   const loginButtonClickHandler = async () => {
     setLoading(true);
     try {
-      const res = await loginApiCall({email, password});
-      if (res && res.status === 200) {
-        alert(res.userId);
-        if (res.resumeIdArray.length === 0) {
-          const createResumeApiCallResult = await createResumeApiCall(res.userId);
-          if (createResumeApiCallResult && createResumeApiCallResult.status && createResumeApiCallResult.status === 201) {
-            console.log('createResumeApiCallResult')
-            console.log(createResumeApiCallResult);
-          }
+      const resultData = await loginApiCall({email, password});
+      if (resultData && resultData.status === 200) {
+        const userId = resultData.userId;
+        let resumeIdArray = [];
+        let currentResumeId = null;
+        if (resultData.resumeIdArray.length === 0) {
+          const newResumeIdArray = await createResumeApiCall(resultData.userId);
+          resumeIdArray = [...newResumeIdArray];
+          currentResumeId = resumeIdArray[0];
+        } else {
+          resumeIdArray = resultData.resumeIdArray;
+          currentResumeId = resultData.resumeIdArray[0];
         }
-        history.push(RESUME_BUILDER_ROUTE);
+        setUserDataInTheContext(userId, resumeIdArray, currentResumeId);
       };
-      setLoading(false);
     } catch (err) {
       console.log(err);
       if (
@@ -49,8 +60,14 @@ const Login = () => {
         alert(err.response.data.message);
       } else alert('Something went wrong')
     }
-    
+    setLoading(false);
   };
+
+  if (mainContext.userId && mainContext.resumeIdArray.length && mainContext.currentResumeId) {
+    gotoResumeBuilderPage();
+  }
+
+  console.log('In login jsx')
 
   return (
     <div>
@@ -61,7 +78,7 @@ const Login = () => {
           content='Login to MyCVMaker. Create resume with MyCVMaker.'
         />
       </Helmet>
-      <NavBar />
+      <HomePageNavbar />
       <div className='h-full'>
         <section
           className={
