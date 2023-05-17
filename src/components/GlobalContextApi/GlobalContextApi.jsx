@@ -330,8 +330,12 @@ class GlobalContextApi extends Component {
   };
   // Set image URL
   setImageURL = (url) => {
-    this.state.imageConfig.URL = url;
-    this.reRender();
+    this.setState({
+      imageConfig: {
+        ...this.state.imageConfig,
+        URL: url,
+      }
+    })
   };
   // Skills-Style Handler
   skillsStyleHandler = (name) => {
