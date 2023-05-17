@@ -1,34 +1,24 @@
 import axios from "axios";
 import React, { Component, useContext, useState } from "react";
 import { Loader } from "../../../constants/Loader";
+import { saveResumeData } from "../../../utils/apiCalls";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 
 const Editor = (props) => {
   const api = useContext(Context);
   const [saving, setSave] = useState(false);
-  const saveHandler = () => {
+  const saveHandler = async () => {
     if (api.disableSaveButton) {
       if (api.networkError) {
         alert("Network Error");
       } else if (api.isUserLoggedIn === false) {
-        alert("Please login !!");
+        alert("Please login to save your changes");
       }
       return;
     };
-    const rId = localStorage.getItem("%ru!I#d");
-    const uId = localStorage.getItem("%su!I#d");
-    if (!uId) {
-      alert("Not Logged In");
-      return;
-    }
     setSave(true);
-    axios
-      .put(
-        `${process.env.REACT_APP_URL}/resume/${localStorage.getItem(
-          "%ru!I#d"
-        )}`,
-        {
-          userId: localStorage.getItem("%su!I#d"),
+    try {
+      const bodyData = {
           cv: api.cv,
           styles: api.styles,
           rows: api.state.rows,
@@ -40,24 +30,22 @@ const Editor = (props) => {
           headerCustomFieldLayout: api.state.headerCustomFieldLayout,
           headingLayout: api.state.headingLayout,
           version: api.state.version,
-        }
-      )
-      .then((res) => {
-        setSave(false);
-      })
-      .catch((err) => {
-        setSave(false);
-        //console.log(err.message);
-        if (
-          err &&
-          err.response &&
-          err.response.status &&
-          err.response.status === 401
-        ) {
-          localStorage.removeItem("%su!I#d");
-          localStorage.removeItem("%ru!I#d");
-        }
-      });
+      }
+      await saveResumeData(api.userId, api.currentResumeId, bodyData);
+    } catch (err) {
+      //console.log(err.message);
+      if (
+        err &&
+        err.response &&
+        err.response.status &&
+        err.response.status === 401
+      ) {
+        alert('Something went wrong');
+      }
+    };
+    setTimeout(()=>{
+      setSave(false);
+    }, 1000);
   };
   const getSaveButtonClassName = () => {
     let classNames = 'mx-auto absolute px-20 bg-blue-600 btn text-white btn-md bottom-0 shadow-fuchsia-800 shadow-2xl'
