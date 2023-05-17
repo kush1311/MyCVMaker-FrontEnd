@@ -405,8 +405,11 @@ export default class PdfMaker extends Component {
     }, 800);
     this.verifyTokenHandler();
   }
+  getPleaseLoginModalShowedValueFromLocalStorage () {
+    return localStorage.getItem('pleaseloginmodalshowed');
+  }
   shallGivePleaseLoginModal () {
-    return !this.context.networkError && this.context.isUserLoggedIn !== null && !this.context.pleaseLoginModalShowed && !this.context.isUserLoggedIn;
+    return !this.context.networkError && this.context.isUserLoggedIn !== null && !this.context.pleaseLoginModalShowed && !this.context.isUserLoggedIn && (this.getPleaseLoginModalShowedValueFromLocalStorage() !== 'yes');
   }
   updateStoreInLocalStorage () {
     if (this.context.cv && this.context.currentResumeId) {      
