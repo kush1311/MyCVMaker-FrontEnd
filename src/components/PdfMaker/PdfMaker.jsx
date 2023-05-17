@@ -19,7 +19,7 @@ import { getResume, getResumeData, getResumeTemplateData, message, verifyTokenAp
 import { Helmet } from "react-helmet";
 import PleaseLoginModal from "../Modals/PleaseLoginModal";
 import { LOGIN_ROUTE } from "../../constants/routes";
-import { Loader } from "../../constants/Loader";
+import { Loader } from "../AllLoaders/Loaders";
 // const PDFViewer = lazy(() => import("./PDFViewer/PDFViewer"));
 
 // TODO: Lazy loading of HiddenPdf could be solution for slow rendring

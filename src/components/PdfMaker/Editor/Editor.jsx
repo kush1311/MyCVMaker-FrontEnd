@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component, useContext, useState } from "react";
-import { Loader } from "../../../constants/Loader";
+import { Loader } from "../../AllLoaders/Loaders";
 import { saveResumeData } from "../../../utils/apiCalls";
 import { Context } from "../../GlobalContextApi/GlobalContextApi";
 

@@ -23,7 +23,7 @@ import {
   hideContainer,
   hideSpan,
 } from "../../../../constants/styles";
-import { Loader } from "../../../../constants/Loader";
+import { Loader } from "../../../AllLoaders/Loaders";
 
 export const Header = (props) => {
   const api = useContext(Context);
