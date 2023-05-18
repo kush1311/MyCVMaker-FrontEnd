@@ -26,24 +26,22 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <React.Suspense fallback={<FullPageLoader/>}>
           <BrowserRouter>
             <GlobalContextApi>
               <AuthenticationApi>
                 <Switch>
-                  <Route path={FEEDBACK_ROUTE} exact component={Feedback} />
-                  <Route path={LOGIN_ROUTE} exact component={Login} />
-                  <Route path={REGISTER_ROUTE} exact component={Register} />
-                  <Route path={HOME_ROUTE} exact component={Home} />
-                  <Suspense fallback={<FullPageLoader />}>
+                  <React.Suspense fallback={<FullPageLoader/>}>
+                    <Route path={FEEDBACK_ROUTE} exact component={Feedback} />
+                    <Route path={LOGIN_ROUTE} exact component={Login} />
+                    <Route path={REGISTER_ROUTE} exact component={Register} />
+                    <Route path={HOME_ROUTE} exact component={Home} />
                     <Route exact path={RESUME_BUILDER_ROUTE} component={PdfMaker} />
-                    <Route exact path="*" component={NotFound} />
-                  </Suspense>
+                    <Route component={NotFound} />
+                  </React.Suspense>
                 </Switch>
               </AuthenticationApi>
             </GlobalContextApi>
           </BrowserRouter>
-        </React.Suspense>
       </>
     );
   }
