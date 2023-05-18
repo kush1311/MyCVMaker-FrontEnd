@@ -1,22 +1,20 @@
-import React, { Component, Suspense } from "react";
+import React, { Component } from "react";
 import GlobalContextApi, {
   Context,
 } from "./components/GlobalContextApi/GlobalContextApi";
-import Home from "./components/Home/Home";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import NotFound from "./components/NotFound";
 import "./App.css";
-import Feedback from "./components/Feedback/Feedback";
-import Login from "./components/Home/Account/Login";
-import Register from "./components/Home/Account/Register";
 import axios from "axios";
-import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 import AuthenticationApi from "./components/ProtectedRoutes/AuthenticationApi";
 import { FEEDBACK_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESUME_BUILDER_ROUTE } from "./constants/routes";
 import logController from "./utils/logController";
 import { FullPageLoader } from "./components/AllLoaders/Loaders";
-// import PdfMaker from "./components/PdfMaker/PdfMaker";
+const Home = React.lazy(() => import("./components/Home/Home"));
+const Feedback = React.lazy(() => import("./components/Feedback/Feedback"));
+const Login = React.lazy(() => import("./components/Home/Account/Login"));
+const Register = React.lazy(() => import("./components/Home/Account/Register"));
 const PdfMaker = React.lazy(() => import("./components/PdfMaker/PdfMaker"));
+const NotFound = React.lazy(() => import("./components/NotFound"));
 
 axios.defaults.withCredentials = true;
 
