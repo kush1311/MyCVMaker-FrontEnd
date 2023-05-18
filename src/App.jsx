@@ -27,16 +27,16 @@ export default class App extends Component {
           <BrowserRouter>
             <GlobalContextApi>
               <AuthenticationApi>
-                <Switch>
                   <React.Suspense fallback={<FullPageLoader/>}>
-                    <Route path={FEEDBACK_ROUTE} exact component={Feedback} />
-                    <Route path={LOGIN_ROUTE} exact component={Login} />
-                    <Route path={REGISTER_ROUTE} exact component={Register} />
-                    <Route path={HOME_ROUTE} exact component={Home} />
-                    <Route exact path={RESUME_BUILDER_ROUTE} component={PdfMaker} />
-                    <Route component={NotFound} />
+                    <Switch>
+                      <Route path={FEEDBACK_ROUTE} exact component={Feedback} />
+                      <Route path={LOGIN_ROUTE} exact component={Login} />
+                      <Route path={REGISTER_ROUTE} exact component={Register} />
+                      <Route path={HOME_ROUTE} exact component={Home} />
+                      <Route exact path={RESUME_BUILDER_ROUTE} component={PdfMaker} />
+                      <Route component={NotFound} />
+                    </Switch>
                   </React.Suspense>
-                </Switch>
               </AuthenticationApi>
             </GlobalContextApi>
           </BrowserRouter>
