@@ -42,14 +42,16 @@ const loginApiCall = async ({ email, password }) => {
             console.log(`${API_URL.LOGIN}/${email}/${password}`);
             const result = await axios.get(`${API_URL.LOGIN}/${encrypt(email)}/${encrypt(password)}`);
             const {userData} = result.data;
-            const userId = JSON.parse(decrypt(userData.userId));
+            const userId = decrypt(userData.userId);
             const firstName = decrypt(userData.firstName);
             const lastName = decrypt(userData.lastName);
             const resumeIdArray = userData.resumeIdArray;
             for (let index = 0; index < resumeIdArray.length; index++) {
                 const resumeId = resumeIdArray[index];
                 resumeIdArray[index] = decrypt(resumeId);
+                console.log(typeof resumeIdArray[index]);
             }
+            console.log(typeof userId);
             return {userId, firstName, lastName, resumeIdArray, status: result.status};
         } catch (error) {
             console.log(error);
