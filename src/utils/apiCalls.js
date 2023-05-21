@@ -48,7 +48,7 @@ const loginApiCall = async ({ email, password }) => {
             const resumeIdArray = userData.resumeIdArray;
             for (let index = 0; index < resumeIdArray.length; index++) {
                 const resumeId = resumeIdArray[index];
-                resumeIdArray[index] = JSON.parse(decrypt(resumeId));
+                resumeIdArray[index] = decrypt(resumeId);
             }
             return {userId, firstName, lastName, resumeIdArray, status: result.status};
         } catch (error) {
