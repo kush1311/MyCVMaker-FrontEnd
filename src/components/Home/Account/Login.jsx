@@ -17,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [numberOfCreateResumeApiCall, setNumberOfCreateResumeApiCall] = useState(0);
   const mainContext = useContext(Context);
 
   useEffect(() => {
@@ -40,9 +41,13 @@ const Login = () => {
         let resumeIdArray = [];
         let currentResumeId = null;
         if (resultData.resumeIdArray.length === 0) {
-          const newResumeIdArray = await createResumeApiCall(resultData.userId);
-          resumeIdArray = [...newResumeIdArray];
-          currentResumeId = resumeIdArray[0];
+          await createResumeApiCall(resultData.userId);
+          if (numberOfCreateResumeApiCall === 0) {
+            setNumberOfCreateResumeApiCall(numberOfCreateResumeApiCall+1)
+            return loginButtonClickHandler();
+          } else {
+            alert('Server Down, sorry for inconvinience')
+          }
         } else {
           resumeIdArray = resultData.resumeIdArray;
           currentResumeId = resultData.resumeIdArray[0];
