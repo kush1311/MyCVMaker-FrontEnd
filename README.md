@@ -1,6 +1,27 @@
-# Getting Started with Create React App
+## 👋 Hey there, I am Het Desai.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### MyCVMaker app has two components. You will need both components to perfectly run the website.
+
+1. [FrontEnd](https://github.com/devhd9/MyCVMaker-FrontEnd)
+2. [Backend](https://github.com/devhd9/MyCVMaker-Backend)
+
+**Tip**: First setup backend then do frontend.
+
+#### Follow the below steps to run `React App` on your local system:
+
+##### Option 1: If you just want to run app on your local, use docker.
+
+0. `cd` into root directory of repository
+1. Create `.env` file according to `.env.example` file
+2. Run: `docker build . -t <IMAGE_NAME>:<TAG>`
+3. Run: `docker run --env-file .env -p 3000:3000 <IMAGE>`
+
+##### Option 2: Running app without docker.
+
+0. `cd` into root directory of repository
+1. Create `.env` file according to `.env.example` file
+2. Run: `npm ci`
+3. Run: `npm start`
 
 ## Available Scripts
 
@@ -14,12 +35,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run build:production`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
+It will require `.env.production` file having variables mentioned in `.env.example`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -44,22 +62,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
 ### Deployment
 
