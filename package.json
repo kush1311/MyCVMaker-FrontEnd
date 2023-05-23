@@ -1,7 +1,7 @@
 {
-  "name": "docseditor",
-  "homepage": "http://mycvmaker.online",
-  "version": "0.1.0",
+  "name": "mycvmaker-frontend",
+  "homepage": "http://mycvmaker.site",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@heroicons/react": "^1.0.5",
