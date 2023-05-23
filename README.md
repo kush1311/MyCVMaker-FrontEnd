@@ -23,6 +23,7 @@
 2. Run: `npm ci`
 3. Run: `npm start`
 
+#### The app will be available on [http://localhost:3000](http://localhost:3000)
 ## Available Scripts
 
 In the project directory, you can run:
