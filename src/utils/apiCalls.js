@@ -5,7 +5,7 @@ import logController from "./logController";
 logController()
 
 axios.defaults.withCredentials = true
-const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
+const SERVER_BASE_URL = `${process.env.REACT_APP_SERVER_BASE_URL}/api`;
 console.log('SERVER_BASE_URL -->', SERVER_BASE_URL);
 
 const API_URL = {
