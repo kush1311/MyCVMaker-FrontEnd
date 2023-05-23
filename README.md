@@ -18,6 +18,8 @@
 
 ##### Option 2: Running app without docker.
 
+###### You will need Node Js with specific version mentioned in `package.json`
+
 0. `cd` into root directory of repository
 1. Create `.env` file according to `.env.example` file
 2. Run: `npm ci`
