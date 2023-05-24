@@ -1,5 +1,7 @@
 ## 👋 Hey there, I am Het Desai.
 
+#### Checkout website from [here](http://mycvmaker.site/)
+
 #### MyCVMaker app has two components. You will need both components to perfectly run the website.
 
 1. [FrontEnd](https://github.com/devhd9/MyCVMaker-FrontEnd)
