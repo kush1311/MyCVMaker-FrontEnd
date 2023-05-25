@@ -1,21 +1,23 @@
 ## 👋 Hey there, I am Het Desai.
 
-#### Checkout website [here](http://mycvmaker.site/)
+### Checkout website [here](http://mycvmaker.site/)
 
-#### Current Phase:
+### 1. Current Phase:
 1. Add `E2E Testing` in pipeline
 2. Convert to `Typescript`
 3. Switch to `Redux` for state management
 4. Improve `User Interaction`
 
-#### MyCVMaker app has two components. You will need both components to perfectly run the website.
+### 2. Installing App:
+
+##### MyCVMaker app has two components. You will need both components to perfectly run the website.
 
 1. [FrontEnd](https://github.com/devhd9/MyCVMaker-FrontEnd)
 2. [Backend](https://github.com/devhd9/MyCVMaker-Backend)
 
 **Tip**: First setup backend then do frontend.
 
-#### Follow the below steps to run `React App` on your local system:
+##### Follow the below steps to run `React App` on your local system:
 
 ##### Option 1: If you just want to run app on your local, use docker.
 
@@ -33,12 +35,13 @@
 2. Run: `npm ci`
 3. Run: `npm start`
 
-#### The app will be available on [http://localhost:3000](http://localhost:3000)
-## Available Scripts
+##### The app will be available on [http://localhost:3000](http://localhost:3000)
+
+### 3. Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+#### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -46,7 +49,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm run build:production`
+#### `npm run build:production`
 
 It will require `.env.production` file having variables mentioned in `.env.example`
 
@@ -58,7 +61,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+#### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -68,16 +71,16 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### 4. Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Deployment
+### 5. Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+### 6. `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
