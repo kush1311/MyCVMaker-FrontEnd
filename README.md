@@ -7,6 +7,7 @@
 2. Convert to `Typescript`
 3. Switch to `Redux` for state management
 4. Improve `User Interaction`
+5. Remove `bad practices`
 
 ### 2. Installing App:
 
