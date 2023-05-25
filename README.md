@@ -1,6 +1,12 @@
 ## 👋 Hey there, I am Het Desai.
 
-#### Checkout website from [here](http://mycvmaker.site/)
+#### Checkout website [here](http://mycvmaker.site/)
+
+#### Current Phase:
+1. Add `E2E Testing` in pipeline
+2. Convert to `Typescript`
+3. Switch to `Redux` for state management
+4. Improve `User Interaction`
 
 #### MyCVMaker app has two components. You will need both components to perfectly run the website.
 
