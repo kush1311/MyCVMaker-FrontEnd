@@ -13,7 +13,7 @@
 | 5   | [npm run build fails to minify](#5-npm-run-build-fails-to-minify)
 
 ### 1. Development Status:
-1. Add `E2E Testing` in pipeline
+1. Add `E2E Testing` in pipeline 
 2. Convert to `Typescript`
 3. Switch to `Redux` for state management
 4. Improve `User Interaction`
