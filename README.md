@@ -2,6 +2,16 @@
 
 ### Checkout website [here](http://mycvmaker.site/)
 
+### Table of content
+
+| No. | Questions                                                                                                                                                                                                                        |
+| --- | -----------------------------------------------------------------|
+| 1   | [Current Phase](#1-current-phase)
+| 2   | [Installing App](#2-installing-app)
+| 3   | [Available Scripts](#3-available-scripts)
+| 4   | [Learn More](#4-learn-more)
+| 5   | [npm run build fails to minify](#5-npm-run-build-fails-to-minify)
+
 ### 1. Current Phase:
 1. Add `E2E Testing` in pipeline
 2. Convert to `Typescript`
