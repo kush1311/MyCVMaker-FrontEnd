@@ -2,6 +2,16 @@
 
 ### Checkout website [here](http://mycvmaker.site/)
 
+### Table of content
+
+| No. | Questions                                                                                                                                                                                                                        |
+| --- | -----------------------------------------------------------------|
+| 1   | [Current Phase](#1-current-phase)
+| 2   | [Installing App](#2-installing-app)
+| 3   | [Available Scripts](#3-available-scripts)
+| 4   | [Learn More](#4-learn-more)
+| 5   | [npm run build fails to minify](#5-npm-run-build-fails-to-minify)
+
 ### 1. Current Phase:
 1. Add `E2E Testing` in pipeline
 2. Convert to `Typescript`
@@ -78,10 +88,6 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### 5. Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### 6. `npm run build` fails to minify
+### 5. `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
