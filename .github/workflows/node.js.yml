@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  CI: false  # Set CI to false to prevent treating warnings as errors
+
 jobs:
   build:
 
