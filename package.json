@@ -26,8 +26,7 @@
     "start": "react-scripts start",
     "build:production": "GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false REACT_APP_ENV=production react-scripts build",
     "build:staging": "REACT_APP_ENV=staging react-scripts build",
-    "test": "echo Testing command not added",
-    "eject": "react-scripts eject"
+    "test": "echo Testing command not added"
   },
   "eslintConfig": {
     "extends": [
